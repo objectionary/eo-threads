@@ -15,13 +15,15 @@ To run slow code in a new thread and wait for its finish in a loop:
 ```
 QQ.threads.thread > x
   [t]
-    very-slow-object
+    very-slow-object > @
 while.
   t.is-running
   [i]
     seq > @
       QQ.io.stdout
         "still waiting..."
+      QQ.threads.sleep
+        QQ.dt.millisecond.mul 100
       if.
         i.gt 10
         t.terminate
