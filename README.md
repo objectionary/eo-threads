@@ -38,6 +38,8 @@ The object `thread` has attributes:
 Dataization of the `thread` object means waiting for its finish.
 If the thread is terminated, dataization returns `error`.
 
+A thread starts on the first attempt to take `@` from it.
+
 ## How to Contribute
 
 Fork repository, make changes, send us a pull request.
