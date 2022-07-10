@@ -13,12 +13,12 @@
 To run slow code in a new thread and wait for its finish in a loop:
 
 ```
-QQ.threads.thread > t
-  [x]
-    very-slow-object > @
-t.start
 while.
-  t.is-running
+  is-running.
+    start.
+      QQ.threads.thread > t
+      [x]
+        very-slow-object > @
   [i]
     seq > @
       QQ.io.stdout
