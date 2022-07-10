@@ -1,4 +1,4 @@
-<img src="https://www.yegor256.com/images/books/elegant-objects/cactus.svg" height="100px" />
+<img src="https://www.yegor256.com/images/books/elegant-objects/cactus.svg" height="92px" />
 
 [![EO principles respected here](https://www.elegantobjects.org/badge.svg)](https://www.elegantobjects.org)
 [![DevOps By Rultor.com](http://www.rultor.com/b/objectionary/eo-threads)](http://www.rultor.com/p/objectionary/eo-threads)
