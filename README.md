@@ -17,8 +17,8 @@ while.
   is-running.
     start.
       QQ.threads.thread > t
-      [x]
-        very-slow-object > @
+        [x]
+          very-slow-object > @
   [i]
     seq > @
       QQ.io.stdout
