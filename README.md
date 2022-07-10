@@ -13,9 +13,10 @@
 To run slow code in a new thread and wait for its finish in a loop:
 
 ```
-QQ.threads.thread > x
-  [t]
+QQ.threads.thread > t
+  [x]
     very-slow-object > @
+t.start
 while.
   t.is-running
   [i]
@@ -26,19 +27,18 @@ while.
         QQ.dt.millisecond.mul 100
       if.
         i.gt 10
-        t.terminate
+        t.stop
         TRUE
 ```
 
 The object `thread` has attributes:
 
-  * `is-running` is TRUE if the thread is still working
-  * `terminate` immediately terminates it
+  * `start` starts the thread or does nothing if it's already running
+  * `is-running` is TRUE if it is still working
+  * `stop` immediately terminates it
 
 Dataization of the `thread` object means waiting for its finish.
 If the thread is terminated, dataization returns `error`.
-
-A thread starts on the first attempt to take `@` from it.
 
 ## How to Contribute
 
