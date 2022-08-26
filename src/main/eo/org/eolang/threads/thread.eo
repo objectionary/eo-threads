@@ -27,5 +27,6 @@
 +version 0.0.0
 
 [slow-obj] > thread
-  [] > @ /slow-obj
-  [] > start /bool
+  [] > join /slow-obj
+  [] > start
+  [] > stop
