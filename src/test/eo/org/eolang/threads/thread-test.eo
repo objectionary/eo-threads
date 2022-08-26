@@ -20,7 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-+alias org.eolang.hamcrest.assert-that
++alias org.eolang.threads.thread
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo
 +junit
@@ -28,7 +28,14 @@
 +version 0.0.0
 
 [] > simple-test
-  assert-that > @
+  eq. > @
     TRUE
-    $.equal-to
-      TRUE
+    TRUE
+
+[] > thread-returns-5-number
+  thread 0 > t
+  QQ.io.stdout > @
+    QQ.txt.sprintf
+      "Result = %d\n"
+      join.
+        t

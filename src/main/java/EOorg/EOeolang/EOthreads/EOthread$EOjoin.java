@@ -42,10 +42,9 @@ import org.eolang.XmirObject;
  * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-@XmirObject(oname = "text.as-int")
+@XmirObject(oname = "thread.join")
 public class EOthread$EOjoin extends PhDefault {
 
-    private Thread java_thread;
     /**
      * Ctor.
      *
@@ -58,28 +57,22 @@ public class EOthread$EOjoin extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Long result = Long.valueOf(5);
-                    return new Data.ToPhi(result);
+                    BruhThreads.EOThread thr = BruhThreads.INSTANCE.get(this);
+                    if (thr == null){
+                        System.out.println("Does not exist, creating");
+                        thr = new BruhThreads.EOThread();
+                        //return new Data.ToPhi((long) -1);
+                    }
+                    thr.start();
+                    if (thr.getState() == Thread.State.NEW){
+                        System.out.println("Was not started");
+                        return new Data.ToPhi((long) -2);
+                    }
+                    thr.join();
+                    return new Data.ToPhi((long) 1);
                 }
             )
         );
     }
 
-}
-
-class ThreadExecuteObj extends Thread{
-    Phi objToExecute;
-    AtComposite atComposite;
-    ThreadExecuteObj(Phi obj){
-        this.objToExecute = obj;
-    }
-
-    public void run(){
-        this.atComposite = new AtComposite(
-            objToExecute,
-            rho -> {
-                return new Data.ToPhi(null);
-            }
-        );
-    }
 }
