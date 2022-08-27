@@ -30,9 +30,8 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import org.eolang.Phi;
-
 import java.util.concurrent.ConcurrentHashMap;
+import org.eolang.Phi;
 
 /**
  * All threads.
@@ -40,24 +39,35 @@ import java.util.concurrent.ConcurrentHashMap;
  * @since 0.0
  */
 final class Threads {
-    public static final Threads INSTANCE = new Threads();
-
-    private final ConcurrentHashMap<Phi, DataizingThread> all_eothreads = new ConcurrentHashMap<>(0);
 
     /**
-     * Ctor
+     * Threads.
      */
-    private Threads(){
+    public static final Threads INSTANCE = new Threads();
+
+    /**
+     * All Threads.
+     * They are contains in a map with Phi keys
+     */
+    private final ConcurrentHashMap<Phi, DataizingThread> all =
+        new ConcurrentHashMap<>(0);
+
+    /**
+     * Ctor.
+     */
+    private Threads() {
         // Singleton
     }
 
-    public DataizingThread get(final Phi phi_thread){
-        return all_eothreads.computeIfAbsent(
-            phi_thread,
-            key ->{
-                System.out.println("Created new thread");
-                return new DataizingThread(phi_thread);
-            }
+    /**
+     * Get.
+     * @param eothread Eothread as a key
+     * @return Thread matching to Phi eothread
+     */
+    public DataizingThread get(final Phi eothread) {
+        return this.all.computeIfAbsent(
+            eothread,
+            key -> new DataizingThread(eothread)
         );
     }
 }

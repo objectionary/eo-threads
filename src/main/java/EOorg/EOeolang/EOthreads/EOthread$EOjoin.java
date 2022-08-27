@@ -57,19 +57,10 @@ public class EOthread$EOjoin extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi phi_thread = rho.attr("ρ").get();
-                    DataizingThread thr = Threads.INSTANCE.get(phi_thread);
-                    if (thr == null){
-                        System.out.println("ATTENTION, Does not exist, creating");
-                        thr = new DataizingThread(null);
-                        //return new Data.ToPhi((long) -1);
-                    }
-                    if (thr.getState() == Thread.State.NEW){
-                        System.out.println("Was not started");
-                        return new Data.ToPhi((long) -2);
-                    }
+                    final Phi eothread = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(eothread);
                     thr.join();
-                    return thr.GetResult();
+                    return thr.getResult();
                 }
             )
         );

@@ -55,3 +55,28 @@
       7
       join.
         t
+
+[] > complex-argument
+  thread > t
+    5.plus
+      5
+  seq > @
+    t.start
+    eq.
+      10
+      join.
+        t
+
+[] > multiple
+  QQ.threads.thread > a
+    2.plus 2
+  QQ.threads.thread > b
+    1.plus 1
+  seq > @
+    a.start
+    b.start
+    eq.
+      times.
+        a.join
+        b.join
+      8

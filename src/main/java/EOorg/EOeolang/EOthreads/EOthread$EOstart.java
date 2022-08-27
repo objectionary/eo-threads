@@ -43,7 +43,7 @@ import org.eolang.XmirObject;
  * @since 0.0
  */
 @XmirObject(oname = "thread.start")
-public class EOthread$EOstart extends PhDefault{
+public class EOthread$EOstart extends PhDefault {
     /**
      * Ctor.
      *
@@ -56,11 +56,8 @@ public class EOthread$EOstart extends PhDefault{
             new AtComposite(
                 this,
                 rho -> {
-                    Phi phi_thread = rho.attr("ρ").get();
-                    if (phi_thread == null){
-                        System.out.println("ERROR0 phi_thread == null");
-                    }
-                    DataizingThread thr = Threads.INSTANCE.get(phi_thread);
+                    final Phi eothread = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(eothread);
                     thr.start();
                     return new Data.ToPhi(true);
                 }

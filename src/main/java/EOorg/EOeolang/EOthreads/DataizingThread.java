@@ -32,40 +32,42 @@ package EOorg.EOeolang.EOthreads;
 
 import org.eolang.Data;
 import org.eolang.Dataized;
-import org.eolang.Param;
 import org.eolang.Phi;
 
 /**
- * A thread that takes and Dataizes while running
+ * A thread that takes and Dataizes while running.
  *
  * @since 0.0
  */
-final class DataizingThread extends Thread{
-    private Phi phi_thread;
+final class DataizingThread extends Thread {
+    /**
+     * EOthread.
+     */
+    private Phi eothread;
+
+    /**
+     * Computed "slow".
+     */
     private Phi result;
-    public DataizingThread(Phi phi_thread){
-        this.phi_thread = phi_thread;
+
+    /**
+     * Ctor.
+     * @param eothread Phi thread
+     */
+    DataizingThread(final Phi eothread) {
+        this.eothread = eothread;
     }
 
-    public Phi GetResult() {
-        return result;
+    /**
+     * Get.
+     * @return The computed slow
+     */
+    public Phi getResult() {
+        return this.result;
     }
 
     @Override
-    public void run(){
-        System.out.println("Started, go sleeping...");
-        if (this.phi_thread == null){
-            System.out.println("ERROR1, phi_thread == null");
-            this.result = new Data.ToPhi(new Dataized(phi_thread.attr("slow").get()).take());
-        }
-        else {
-            this.result = phi_thread.attr("slow").get();
-        }
-        try {
-            sleep(2000);
-        } catch (InterruptedException e) {
-            throw new RuntimeException(e);
-        }
-        System.out.println("Wake up!!");
+    public void run() {
+        this.result = new Data.ToPhi(new Dataized(this.eothread.attr("slow").get()).take());
     }
 }
