@@ -26,7 +26,7 @@
 +rt jvm org.eolang:eo-runtime:0.0.0
 +version 0.0.0
 
-[slow-obj] > thread
+[slow] > thread
   [] > join /slow-obj
   [] > start /bool
   [] > stop

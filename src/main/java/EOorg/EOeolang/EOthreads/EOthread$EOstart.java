@@ -56,8 +56,11 @@ public class EOthread$EOstart extends PhDefault{
             new AtComposite(
                 this,
                 rho -> {
-                    Phi thread = rho.attr("ρ").get();
-                    BruhThreads.EOThread thr = BruhThreads.INSTANCE.get(thread);
+                    Phi phi_thread = rho.attr("ρ").get();
+                    if (phi_thread == null){
+                        System.out.println("ERROR0 phi_thread == null");
+                    }
+                    DataizingThread thr = Threads.INSTANCE.get(phi_thread);
                     thr.start();
                     return new Data.ToPhi(true);
                 }

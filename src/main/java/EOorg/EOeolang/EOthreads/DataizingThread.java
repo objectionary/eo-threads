@@ -30,49 +30,42 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import org.eolang.AtComposite;
 import org.eolang.Data;
-import org.eolang.PhDefault;
+import org.eolang.Dataized;
+import org.eolang.Param;
 import org.eolang.Phi;
-import org.eolang.XmirObject;
 
 /**
- * JOIN.
+ * A thread that takes and Dataizes while running
  *
- * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-@XmirObject(oname = "thread.join")
-public class EOthread$EOjoin extends PhDefault {
-
-    /**
-     * Ctor.
-     *
-     * @param sigma Sigma
-     */
-    public EOthread$EOjoin(final Phi sigma) {
-        super(sigma);
-        this.add(
-            "φ",
-            new AtComposite(
-                this,
-                rho -> {
-                    final Phi phi_thread = rho.attr("ρ").get();
-                    DataizingThread thr = Threads.INSTANCE.get(phi_thread);
-                    if (thr == null){
-                        System.out.println("ATTENTION, Does not exist, creating");
-                        thr = new DataizingThread(null);
-                        //return new Data.ToPhi((long) -1);
-                    }
-                    if (thr.getState() == Thread.State.NEW){
-                        System.out.println("Was not started");
-                        return new Data.ToPhi((long) -2);
-                    }
-                    thr.join();
-                    return thr.GetResult();
-                }
-            )
-        );
+final class DataizingThread extends Thread{
+    private Phi phi_thread;
+    private Phi result;
+    public DataizingThread(Phi phi_thread){
+        this.phi_thread = phi_thread;
     }
 
+    public Phi GetResult() {
+        return result;
+    }
+
+    @Override
+    public void run(){
+        System.out.println("Started, go sleeping...");
+        if (this.phi_thread == null){
+            System.out.println("ERROR1, phi_thread == null");
+            this.result = new Data.ToPhi(new Dataized(phi_thread.attr("slow").get()).take());
+        }
+        else {
+            this.result = phi_thread.attr("slow").get();
+        }
+        try {
+            sleep(2000);
+        } catch (InterruptedException e) {
+            throw new RuntimeException(e);
+        }
+        System.out.println("Wake up!!");
+    }
 }

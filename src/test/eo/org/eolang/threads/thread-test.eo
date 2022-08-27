@@ -32,16 +32,26 @@
     TRUE
     TRUE
 
-[] > thread-returns-5-number
-  thread 0 > t
+[] > thread-returns-string
+  thread "hello" > t
   seq > @
     t.start
     QQ.io.stdout
       QQ.txt.sprintf
         "t was started. You must wait after me\n"
+    eq.
+      "hello"
+      join.
+        t
+
+[] > thread-returns-number
+  thread 7 > t
+  seq > @
+    t.start
     QQ.io.stdout
       QQ.txt.sprintf
-        "Result = %b\n"
-        join.
-          t
-    TRUE
+        "t was started. You must wait after me\n"
+    eq.
+      7
+      join.
+        t

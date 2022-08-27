@@ -30,49 +30,34 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import org.eolang.AtComposite;
-import org.eolang.Data;
-import org.eolang.PhDefault;
 import org.eolang.Phi;
-import org.eolang.XmirObject;
+
+import java.util.concurrent.ConcurrentHashMap;
 
 /**
- * JOIN.
+ * All threads.
  *
- * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-@XmirObject(oname = "thread.join")
-public class EOthread$EOjoin extends PhDefault {
+final class Threads {
+    public static final Threads INSTANCE = new Threads();
+
+    private final ConcurrentHashMap<Phi, DataizingThread> all_eothreads = new ConcurrentHashMap<>(0);
 
     /**
-     * Ctor.
-     *
-     * @param sigma Sigma
+     * Ctor
      */
-    public EOthread$EOjoin(final Phi sigma) {
-        super(sigma);
-        this.add(
-            "φ",
-            new AtComposite(
-                this,
-                rho -> {
-                    final Phi phi_thread = rho.attr("ρ").get();
-                    DataizingThread thr = Threads.INSTANCE.get(phi_thread);
-                    if (thr == null){
-                        System.out.println("ATTENTION, Does not exist, creating");
-                        thr = new DataizingThread(null);
-                        //return new Data.ToPhi((long) -1);
-                    }
-                    if (thr.getState() == Thread.State.NEW){
-                        System.out.println("Was not started");
-                        return new Data.ToPhi((long) -2);
-                    }
-                    thr.join();
-                    return thr.GetResult();
-                }
-            )
-        );
+    private Threads(){
+        // Singleton
     }
 
+    public DataizingThread get(final Phi phi_thread){
+        return all_eothreads.computeIfAbsent(
+            phi_thread,
+            key ->{
+                System.out.println("Created new thread");
+                return new DataizingThread(phi_thread);
+            }
+        );
+    }
 }
