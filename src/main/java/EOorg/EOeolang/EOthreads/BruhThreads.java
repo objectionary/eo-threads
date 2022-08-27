@@ -22,15 +22,28 @@ final class BruhThreads {
     }
 
     public EOThread get(final Phi thread){
-        return all_eothreads.get(thread);
+        return all_eothreads.computeIfAbsent(
+            thread,
+            key ->{
+                System.out.println("Created new thread");
+                return new EOThread(null);
+            }
+        );
+    }
+    public void put(final Phi phi, final EOThread eoThread){
+        all_eothreads.put(phi, eoThread);
     }
 
     public static class EOThread extends Thread{
+        private Phi slow_obj;
+        public EOThread(Phi slow_obj){
+            this.slow_obj = slow_obj;
+        }
         @Override
         public void run(){
             System.out.println("Started, go sleeping...");
             try {
-                sleep(4000);
+                sleep(10000);
             } catch (InterruptedException e) {
                 throw new RuntimeException(e);
             }

@@ -34,8 +34,14 @@
 
 [] > thread-returns-5-number
   thread 0 > t
-  QQ.io.stdout > @
-    QQ.txt.sprintf
-      "Result = %d\n"
-      join.
-        t
+  seq > @
+    t.start
+    QQ.io.stdout
+      QQ.txt.sprintf
+        "t was started. You must wait after me\n"
+    QQ.io.stdout
+      QQ.txt.sprintf
+        "Result = %b\n"
+        join.
+          t
+    TRUE

@@ -28,5 +28,5 @@
 
 [slow-obj] > thread
   [] > join /slow-obj
-  [] > start
+  [] > start /bool
   [] > stop

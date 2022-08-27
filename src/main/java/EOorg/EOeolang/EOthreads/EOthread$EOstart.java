@@ -37,42 +37,31 @@ import org.eolang.Phi;
 import org.eolang.XmirObject;
 
 /**
- * JOIN.
+ * START.
  *
  * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-@XmirObject(oname = "thread.join")
-public class EOthread$EOjoin extends PhDefault {
-
+@XmirObject(oname = "thread.start")
+public class EOthread$EOstart extends PhDefault{
     /**
      * Ctor.
      *
      * @param sigma Sigma
      */
-    public EOthread$EOjoin(final Phi sigma) {
+    public EOthread$EOstart(final Phi sigma) {
         super(sigma);
         this.add(
             "φ",
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi phi_thread = rho.attr("ρ").get();
-                    BruhThreads.EOThread thr = BruhThreads.INSTANCE.get(phi_thread);
-                    if (thr == null){
-                        System.out.println("ATTENTION, Does not exist, creating");
-                        thr = new BruhThreads.EOThread(null);
-                        //return new Data.ToPhi((long) -1);
-                    }
-                    if (thr.getState() == Thread.State.NEW){
-                        System.out.println("Was not started");
-                        return new Data.ToPhi((long) -2);
-                    }
-                    thr.join();
+                    Phi thread = rho.attr("ρ").get();
+                    BruhThreads.EOThread thr = BruhThreads.INSTANCE.get(thread);
+                    thr.start();
                     return new Data.ToPhi(true);
                 }
             )
         );
     }
-
 }
