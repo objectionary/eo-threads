@@ -30,8 +30,3 @@
   [] > join /?
   [] > start /bool
 
-  # @todo #4:3h We need to implement this later
-  #  We need to implement this later.
-  #  This attribute stoppes execution of the thread
-  #  immediately and returns true
-  [] > stop
