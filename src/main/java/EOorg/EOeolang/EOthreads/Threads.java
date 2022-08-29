@@ -67,7 +67,7 @@ final class Threads {
     public DataizingThread get(final Phi eothread) {
         return this.all.computeIfAbsent(
             eothread,
-            key -> new DataizingThread(eothread)
+            key -> new DataizingThread(key)
         );
     }
 }

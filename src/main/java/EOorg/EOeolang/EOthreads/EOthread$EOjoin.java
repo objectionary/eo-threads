@@ -60,7 +60,7 @@ public class EOthread$EOjoin extends PhDefault {
                     final Phi eothread = rho.attr("ρ").get();
                     final DataizingThread thr = Threads.INSTANCE.get(eothread);
                     thr.join();
-                    return thr.getResult();
+                    return thr.dataized();
                 }
             )
         );
