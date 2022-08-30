@@ -57,8 +57,8 @@ public class EOthread$EOjoin extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi thread = rho.attr("ρ").get();
-                    final DataizingThread thr = Threads.INSTANCE.get(thread);
+                    final Phi parent = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(parent);
                     thr.join();
                     return thr.dataized();
                 }
