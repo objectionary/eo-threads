@@ -26,5 +26,8 @@
 +package org.eolang.threads
 +version 0.0.0
 
-[] > get-time-of-day-test
-  TRUE > @
+[] > get-time-of-day
+  gt. > @
+    QQ.sys.call
+      "gettimeofday"
+    0
