@@ -1,12 +1,6 @@
 package EOorg.EOeolang.EOthreads;
 
-import org.eolang.AtComposite;
-import org.eolang.AtFree;
-import org.eolang.Data;
-import org.eolang.Param;
-import org.eolang.PhDefault;
-import org.eolang.Phi;
-import org.eolang.XmirObject;
+import org.eolang.*;
 
 /**
  * SLEEP.
@@ -30,6 +24,11 @@ public class EOsleep extends PhDefault {
                         this,
                         rho -> {
                             long millis = new Param(rho, "millis").strong(Long.class);
+                            if (millis < 0){
+                                throw new ExFailure(
+                                        "You can not sleep for negative millis value"
+                                );
+                            }
                             Thread.sleep(millis);
                             return new Data.ToPhi(true);
                         }
