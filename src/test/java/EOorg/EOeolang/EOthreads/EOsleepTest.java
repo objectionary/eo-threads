@@ -22,8 +22,11 @@
  * SOFTWARE.
  */
 
-/*
- * @checkstyle PackageNameCheck (10 lines)
+/**
+ * EO org.eolang.threads package.
+ *
+ * @since 0.0
+ * @checkstyle PackageNameCheck (4 lines)
  */
 package EOorg.EOeolang.EOthreads;
 
@@ -43,18 +46,16 @@ public final class EOsleepTest {
 
     @Test
     public void sleepOneSec() {
-        long timeout = 1000L;
+        final long timeout = 1000L;
         final Phi sleep = new EOsleep(Phi.Φ);
         final Phi millis = new Data.ToPhi(timeout);
         sleep.attr("millis").put(millis);
-
-        long start = System.currentTimeMillis();
-        new Dataized(sleep).take(Boolean.class);
-        long end = System.currentTimeMillis();
-
+        final long start = System.currentTimeMillis();
+        new Dataized(sleep).take();
+        final long end = System.currentTimeMillis();
         MatcherAssert.assertThat(
-                end - start,
-                Matchers.greaterThanOrEqualTo(timeout)
+            end - start,
+            Matchers.greaterThanOrEqualTo(timeout)
         );
     }
 }
