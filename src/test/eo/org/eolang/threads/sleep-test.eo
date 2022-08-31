@@ -20,14 +20,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
++alias org.eolang.hamcrest.assert-that
++alias org.eolang.threads.sleep
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo
 +junit
 +package org.eolang.threads
 +version 0.0.0
 
-[] > get-time-of-day
-  gt. > @
-    QQ.sys.call
-      "gettimeofday"
-    0
+[] > sleep-returns-true
+  sleep > @
+    1000
+
+[] > negative-millis
+  assert-that > @
+    try
+      []
+        sleep > @
+          -1000
+      [e]
+        e > @
+      nop
+    $.equal-to
+      "You can not sleep for negative millis value"
