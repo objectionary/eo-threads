@@ -33,41 +33,29 @@ package EOorg.EOeolang.EOthreads;
 import org.eolang.Data;
 import org.eolang.Dataized;
 import org.eolang.Phi;
+import org.hamcrest.MatcherAssert;
+import org.hamcrest.Matchers;
+import org.junit.jupiter.api.Test;
 
 /**
- * A thread that takes and Dataizes while running.
+ * Test case for {@link EOsleep}.
  *
  * @since 0.0
  */
-final class DataizingThread extends Thread {
-    /**
-     * EOthread.
-     */
-    private Phi thread;
+public final class EOsleepTest {
 
-    /**
-     * Computed "slow".
-     */
-    private Phi computed;
-
-    /**
-     * Ctor.
-     * @param thread Phi thread
-     */
-    DataizingThread(final Phi thread) {
-        this.thread = thread;
-    }
-
-    /**
-     * Dataized.
-     * @return The computed slow
-     */
-    public Phi dataized() {
-        return this.computed;
-    }
-
-    @Override
-    public void run() {
-        this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
+    @Test
+    public void sleepOneSec() {
+        final long timeout = 1000L;
+        final Phi sleep = new EOsleep(Phi.Φ);
+        final Phi millis = new Data.ToPhi(timeout);
+        sleep.attr("millis").put(millis);
+        final long start = System.currentTimeMillis();
+        new Dataized(sleep).take();
+        final long end = System.currentTimeMillis();
+        MatcherAssert.assertThat(
+            end - start,
+            Matchers.greaterThanOrEqualTo(timeout)
+        );
     }
 }

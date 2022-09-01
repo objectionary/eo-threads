@@ -20,58 +20,26 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-+alias org.eolang.threads.thread
++alias org.eolang.hamcrest.assert-that
++alias org.eolang.threads.sleep
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo
 +junit
 +package org.eolang.threads
 +version 0.0.0
 
-[] > thread-returns-string
-  thread "hello" > t
-  seq > @
-    t.start
-    QQ.io.stdout
-      QQ.txt.sprintf
-        "t was started. You must wait after me\n"
-    eq.
-      "hello"
-      join.
-        t
+[] > sleep-returns-true
+  sleep > @
+    200
 
-[] > thread-returns-number
-  thread 7 > t
-  seq > @
-    t.start
-    QQ.io.stdout
-      QQ.txt.sprintf
-        "t was started. You must wait after me\n"
-    eq.
-      7
-      join.
-        t
-
-[] > complex-argument
-  thread > t
-    5.plus
-      5
-  seq > @
-    t.start
-    eq.
-      10
-      join.
-        t
-
-[] > multiple
-  QQ.threads.thread > a
-    2.plus 2
-  QQ.threads.thread > b
-    1.plus 1
-  seq > @
-    a.start
-    b.start
-    eq.
-      times.
-        a.join
-        b.join
-      8
+[] > negative-millis
+  assert-that > @
+    try
+      []
+        sleep > @
+          -1000
+      [e]
+        e > @
+      nop
+    $.equal-to
+      "You can not sleep for negative millis value"

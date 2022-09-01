@@ -20,58 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-+alias org.eolang.threads.thread
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo
-+junit
 +package org.eolang.threads
++rt jvm org.eolang:eo-runtime:0.0.0
 +version 0.0.0
 
-[] > thread-returns-string
-  thread "hello" > t
-  seq > @
-    t.start
-    QQ.io.stdout
-      QQ.txt.sprintf
-        "t was started. You must wait after me\n"
-    eq.
-      "hello"
-      join.
-        t
-
-[] > thread-returns-number
-  thread 7 > t
-  seq > @
-    t.start
-    QQ.io.stdout
-      QQ.txt.sprintf
-        "t was started. You must wait after me\n"
-    eq.
-      7
-      join.
-        t
-
-[] > complex-argument
-  thread > t
-    5.plus
-      5
-  seq > @
-    t.start
-    eq.
-      10
-      join.
-        t
-
-[] > multiple
-  QQ.threads.thread > a
-    2.plus 2
-  QQ.threads.thread > b
-    1.plus 1
-  seq > @
-    a.start
-    b.start
-    eq.
-      times.
-        a.join
-        b.join
-      8
+[millis] > sleep /bool

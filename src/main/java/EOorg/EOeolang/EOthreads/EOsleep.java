@@ -30,44 +30,47 @@
  */
 package EOorg.EOeolang.EOthreads;
 
+import org.eolang.AtComposite;
+import org.eolang.AtFree;
 import org.eolang.Data;
-import org.eolang.Dataized;
+import org.eolang.ExFailure;
+import org.eolang.Param;
+import org.eolang.PhDefault;
 import org.eolang.Phi;
+import org.eolang.XmirObject;
 
 /**
- * A thread that takes and Dataizes while running.
+ * SLEEP.
  *
  * @since 0.0
+ * @checkstyle TypeNameCheck (5 lines)
  */
-final class DataizingThread extends Thread {
-    /**
-     * EOthread.
-     */
-    private Phi thread;
-
-    /**
-     * Computed "slow".
-     */
-    private Phi computed;
+@XmirObject(oname = "sleep")
+public class EOsleep extends PhDefault {
 
     /**
      * Ctor.
-     * @param thread Phi thread
+     * @param sigma Sigma
      */
-    DataizingThread(final Phi thread) {
-        this.thread = thread;
+    public EOsleep(final Phi sigma) {
+        super(sigma);
+        this.add("millis", new AtFree());
+        this.add(
+            "φ",
+            new AtComposite(
+                this,
+                rho -> {
+                    final long millis = new Param(rho, "millis").strong(Long.class);
+                    if (millis < 0) {
+                        throw new ExFailure(
+                            "You can not sleep for negative millis value"
+                        );
+                    }
+                    Thread.sleep(millis);
+                    return new Data.ToPhi(true);
+                }
+            )
+        );
     }
 
-    /**
-     * Dataized.
-     * @return The computed slow
-     */
-    public Phi dataized() {
-        return this.computed;
-    }
-
-    @Override
-    public void run() {
-        this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
-    }
 }
