@@ -30,7 +30,7 @@
 
 [] > sleep-returns-true
   sleep > @
-    1000
+    200
 
 [] > negative-millis
   assert-that > @
