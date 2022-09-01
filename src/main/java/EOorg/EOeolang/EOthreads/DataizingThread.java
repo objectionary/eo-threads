@@ -43,7 +43,7 @@ final class DataizingThread extends Thread {
     /**
      * EOthread.
      */
-    private Phi eothread;
+    private Phi thread;
 
     /**
      * Computed "slow".
@@ -52,14 +52,14 @@ final class DataizingThread extends Thread {
 
     /**
      * Ctor.
-     * @param eothread Phi thread
+     * @param thread Phi thread
      */
-    DataizingThread(final Phi eothread) {
-        this.eothread = eothread;
+    DataizingThread(final Phi thread) {
+        this.thread = thread;
     }
 
     /**
-     * Get.
+     * Dataized.
      * @return The computed slow
      */
     public Phi dataized() {
@@ -68,6 +68,6 @@ final class DataizingThread extends Thread {
 
     @Override
     public void run() {
-        this.computed = new Data.ToPhi(new Dataized(this.eothread.attr("slow").get()).take());
+        this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
     }
 }
