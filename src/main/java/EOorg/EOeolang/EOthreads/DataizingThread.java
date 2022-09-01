@@ -68,6 +68,10 @@ final class DataizingThread extends Thread {
 
     @Override
     public void run() {
-        this.computed = new Data.ToPhi(new Dataized(this.eothread.attr("slow").get()).take());
+        try {
+            this.computed = new Data.ToPhi(new Dataized(this.eothread.attr("slow").get()).take());
+        } catch (InterruptedException ie){
+            ;
+        }
     }
 }
