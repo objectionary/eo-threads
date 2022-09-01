@@ -52,15 +52,16 @@ public class EOthread$EOstop extends PhDefault {
     public EOthread$EOstop(final Phi sigma) {
         super(sigma);
         this.add(
-                "φ",
-                new AtComposite(
-                        this,
-                        rho -> {
-                            final Phi eothread = rho.attr("ρ").get();
-                            final DataizingThread thr = Threads.INSTANCE.get(eothread);
-                            return new Data.ToPhi(true);
-                        }
-                )
-        );
+            "φ",
+            new AtComposite(
+                this,
+                rho -> {
+                    final Phi parent = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(parent);
+                    thr.interrupt();
+                    return new Data.ToPhi(true);
+                }
+            )
+    );
     }
 }
