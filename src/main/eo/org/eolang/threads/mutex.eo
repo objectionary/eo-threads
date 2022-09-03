@@ -1,0 +1,12 @@
+[permits] > mutex
+  # gives a permit and return personal lock
+  [] > acquire /lock
+
+  [] > lock
+    memory TRUE > opened
+    [] > unsafe-release /bool
+    [] > release
+      if. > @
+        opened
+        unsafe-release
+        error "this lock is already released"
