@@ -20,26 +20,16 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
++alias org.eolang.threads.mutex
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo
++junit
 +package org.eolang.threads
-+rt jvm org.eolang:eo-runtime:0.0.0
 +version 0.0.0
 
-[permits] > mutex
-  # gives a permit and return personal lock
-  [] > acquire
-    TRUE > unsafe-acquire
-    seq > @
-      unsafe-acquire
-      lock > l
-
-  [] > lock
-    memory TRUE > opened
-    TRUE > unsafe-release
-    [] > release
-      if. > @
-        opened
-        unsafe-release
-        error "this lock is already released"
-    opened > @
+[] > lockk
+  mutex 100 > m
+  seq > @
+    m.acquire > a
+    a.unsafe-release
+    TRUE
