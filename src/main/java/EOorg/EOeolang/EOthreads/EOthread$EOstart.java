@@ -56,8 +56,8 @@ public class EOthread$EOstart extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi eothread = rho.attr("ρ").get();
-                    final DataizingThread thr = Threads.INSTANCE.get(eothread);
+                    final Phi parent = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(parent);
                     thr.start();
                     return new Data.ToPhi(true);
                 }
