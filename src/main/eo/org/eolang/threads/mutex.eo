@@ -29,17 +29,11 @@
 [permits] > mutex
   # gives a permit and return personal lock
   [] > acquire
-    TRUE > unsafe-acquire
-    seq > @
-      unsafe-acquire
-      lock > l
+    [] > unsafe-acquire /lock
+    unsafe-acquire > @
 
   [] > lock
-    memory TRUE > opened
-    TRUE > unsafe-release
     [] > release
-      if. > @
-        opened
-        unsafe-release
-        error "this lock is already released"
-    opened > @
+      [] > unsafe-release /bool
+      TRUE > @
+    TRUE > @

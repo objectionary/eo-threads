@@ -27,9 +27,9 @@
 +package org.eolang.threads
 +version 0.0.0
 
-[] > lockk
+[] > lock
   mutex 100 > m
   seq > @
     m.acquire > a
-    a.unsafe-release
-    TRUE
+    a.release
+    a.release.unsafe-release
