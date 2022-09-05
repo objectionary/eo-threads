@@ -62,8 +62,7 @@ public class EOmutex$EOacquire$EOunsafe_acquire extends PhDefault {
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
                     semaphore.acquire();
 
-                    return new EOmutex$EOlock(mutex);
-                }
+                    return new Data.ToPhi(true);                }
             )
         );
     }

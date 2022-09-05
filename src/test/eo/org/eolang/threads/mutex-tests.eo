@@ -27,9 +27,45 @@
 +package org.eolang.threads
 +version 0.0.0
 
+[] > unsafe-lock
+  mutex 100 > m
+  seq > @
+    m.acquire.unsafe-acquire
+    m.lock.release.unsafe-release
+
 [] > lock
   mutex 100 > m
   seq > @
     m.acquire > a
     a.release
-    a.release.unsafe-release
+
+[] > twice-release-throws-exception
+  mutex 100 > m
+  seq > @
+    m.acquire > a
+    a.release
+    eq.
+      try
+        a.release
+        [e]
+          e > @
+        nop
+      "this lock is already released"
+
+[] > twice-lock-1
+  mutex 1 > mut
+  seq > @
+    mut.acquire.unsafe-acquire
+    mut.lock.release.unsafe-release
+    mut.acquire.unsafe-acquire
+    mut.lock.release.unsafe-release
+
+[] > twice-lock-2
+  mutex 2 > mut
+  seq > @
+    mut.acquire > a1
+    a1.release
+    mut.acquire > a2
+    eq.
+      a2.opened
+      TRUE

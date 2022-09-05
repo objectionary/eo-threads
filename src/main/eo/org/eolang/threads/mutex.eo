@@ -29,11 +29,22 @@
 [permits] > mutex
   # gives a permit and return personal lock
   [] > acquire
-    [] > unsafe-acquire /lock
-    unsafe-acquire > @
+    [] > unsafe-acquire /bool
+    seq > @
+      unsafe-acquire
+      mutex.lock
+        memory TRUE
 
-  [] > lock
-    [] > release
-      [] > unsafe-release /bool
-      TRUE > @
+  [opened] > lock
     TRUE > @
+    [] > release
+      # mutex 1 > m
+      [] > unsafe-release /bool
+      seq > @
+        if.
+          opened
+          seq
+            opened.write FALSE
+            unsafe-release
+          seq
+            error "this lock is already released"
