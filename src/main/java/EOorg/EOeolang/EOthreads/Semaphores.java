@@ -61,6 +61,7 @@ public class Semaphores {
             mutex,
             key -> {
                 long permits = new Dataized(key.attr("permits").get()).take(Long.class);
+                System.out.println("Created new semaphore with permits = "  + permits);
                 return new Semaphore((int) permits);
             }
         );

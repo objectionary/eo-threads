@@ -39,33 +39,20 @@
     m.acquire > a
     a.release
 
-[] > twice-release-throws-exception
-  mutex 100 > m
-  seq > @
-    m.acquire > a
-    a.release
-    eq.
-      try
-        a.release
-        [e]
-          e > @
-        nop
-      "this lock is already released"
-
 [] > twice-lock-1
-  mutex 1 > mut
+  mutex 3 > mut
   seq > @
+    mut.acquire.unsafe-acquire
     mut.acquire.unsafe-acquire
     mut.lock.release.unsafe-release
-    mut.acquire.unsafe-acquire
     mut.lock.release.unsafe-release
 
 [] > twice-lock-2
-  mutex 2 > mut
+  mutex 2 > m
   seq > @
-    mut.acquire > a1
-    a1.release
-    mut.acquire > a2
-    eq.
-      a2.opened
-      TRUE
+    m.acquire > a1!
+    QQ.io.stdout "Acquired a1\n"
+    m.acquire > a2!
+    QQ.io.stdout "Acquired a2\n"
+    a2.release
+    QQ.io.stdout "Released a2\n"
