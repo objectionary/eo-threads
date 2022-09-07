@@ -28,14 +28,24 @@
 
 [permits] > mutex
   # gives a permit and return personal lock
+
+  # @todo #12:180 Make it possible to acquire
+  #  the mutex in sec. Now it requires the
+  #  mutex twice if lock was created in seq and
+  #  the program goes to dead lock.
   [] > acquire
     [] > unsafe-acquire /bool
     seq > @
       unsafe-acquire
-      lockk
+      lock
 
   [] > lock
     TRUE > @
     [] > release
       [] > unsafe-release /bool
-      unsafe-release > @
+
+      # @todo #12:180min Implement lock.release.@
+      #  It must throw exception in the case of
+      #  not the first lock.release, and release the
+      #  mutex if releases firstly.
+      [] > @
