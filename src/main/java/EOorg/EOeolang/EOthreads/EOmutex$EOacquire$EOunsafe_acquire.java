@@ -60,10 +60,7 @@ public class EOmutex$EOacquire$EOunsafe_acquire extends PhDefault {
                 rho -> {
                     final Phi mutex = rho.attr("ρ").get().attr("ρ").get();
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
-                    System.out.println("JAVA wants acquire");
                     semaphore.acquire();
-                    System.out.println("JAVA acquired");
-                    System.out.println("JAVA Available permits = " + semaphore.availablePermits());
                     return new Data.ToPhi(true);
                 }
             )

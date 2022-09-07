@@ -58,15 +58,9 @@ public class EOmutex$EOlock$EOrelease$EOunsafe_release extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    System.out.println("JAVA in unsafe-release");
                     final Phi mutex = rho.attr("ρ").get().attr("ρ").get().attr("ρ").get();
-//                    if (mutex == null){
-//                        System.out.println("mutex in unsafe_release == null");
-//                    }
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
-                    System.out.println("JAVA Next step is release");
                     semaphore.release();
-                    System.out.println("JAVA Previous step is release");
                     return new Data.ToPhi(true);
                 }
             )
