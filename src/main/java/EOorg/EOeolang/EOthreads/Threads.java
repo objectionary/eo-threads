@@ -61,7 +61,7 @@ final class Threads {
 
     /**
      * Get.
-     * @param thread phi thread as a key
+     * @param thread Phi thread as a key
      * @return Thread matching to Phi thread
      */
     public DataizingThread get(final Phi thread) {

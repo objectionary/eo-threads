@@ -30,12 +30,17 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import org.eolang.Dataized;
-import org.eolang.Phi;
 import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.Semaphore;
+import org.eolang.Dataized;
+import org.eolang.Phi;
 
-public class Semaphores {
+/**
+ * All semaphores.
+ *
+ * @since 0.0
+ */
+public final class Semaphores {
 
     /**
      * Semaphores.
@@ -47,7 +52,7 @@ public class Semaphores {
      * They are contained in a map with Phi mutexes as keys
      */
     private final ConcurrentHashMap<Phi, Semaphore> all =
-            new ConcurrentHashMap<>(0);
+        new ConcurrentHashMap<>(0);
 
     /**
      * Ctor.
@@ -56,11 +61,17 @@ public class Semaphores {
         // Singleton
     }
 
+    /**
+     * Get.
+     *
+     * @param mutex Phi mutex as a key
+     * @return Semaphore matching to the key
+     */
     public Semaphore get(final Phi mutex) {
         return this.all.computeIfAbsent(
             mutex,
             key -> {
-                long permits = new Dataized(key.attr("permits").get()).take(Long.class);
+                final long permits = new Dataized(key.attr("permits").get()).take(Long.class);
                 return new Semaphore((int) permits);
             }
         );
