@@ -21,38 +21,51 @@
 # SOFTWARE.
 
 +alias org.eolang.threads.mutex
++alias org.eolang.threads.thread
 +architect yegor256@gmail.com
 +home https://github.com/objectionary/eo
 +junit
 +package org.eolang.threads
 +version 0.0.0
 
-[] > unsafe-lock
+[] > unsafe-lock-1
   mutex 100 > m
   seq > @
     m.acquire.unsafe-acquire
     m.lock.release.unsafe-release
 
-[] > lock
-  mutex 100 > m
+[] > unsafe-lock-2
+  mutex 1 > m
   seq > @
-    m.acquire > a
-    a.release
+    m.acquire.unsafe-acquire
+    m.lock.release.unsafe-release
 
-[] > twice-lock-1
-  mutex 3 > mut
+[] > twice-lock
+  mutex 2 > mut
   seq > @
     mut.acquire.unsafe-acquire
     mut.acquire.unsafe-acquire
     mut.lock.release.unsafe-release
     mut.lock.release.unsafe-release
 
-[] > twice-lock-2
-  mutex 2 > m
+[] > lock-with-threads
+  memory 1 > mem
+  mutex 1 > mut
+  [x] > multiple-by-x
+    seq > @
+      mut.acquire.unsafe-acquire
+      mem.write
+        mem.times x
+      mut.lock.release.unsafe-release
+  thread > t1
+    multiple-by-x 2
+  thread > t2
+    multiple-by-x 3
   seq > @
-    m.acquire > a1!
-    QQ.io.stdout "Acquired a1\n"
-    m.acquire > a2!
-    QQ.io.stdout "Acquired a2\n"
-    a2.release
-    QQ.io.stdout "Released a2\n"
+    t1.start
+    t2.start
+    t1.join
+    t2.join
+    eq.
+      mem
+      6
