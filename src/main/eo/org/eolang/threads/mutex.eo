@@ -23,7 +23,7 @@
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +package org.eolang.threads
-+rt jvm org.eolang:eo-runtime:0.0.0
++rt jvm org.eolang:eo-threads:0.0.0
 +version 0.0.0
 
 [permits] > mutex
@@ -47,5 +47,6 @@
       # @todo #12:90min Implement lock.release.@
       #  It must throw exception in the case of
       #  not the first lock.release, and release the
-      #  mutex if releases firstly.
+      #  mutex if releases firstly. So we
+      #  need to make it the attribute of acquire
       [] > @
