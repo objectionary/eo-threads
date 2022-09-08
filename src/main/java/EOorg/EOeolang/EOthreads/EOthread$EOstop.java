@@ -37,7 +37,7 @@ import org.eolang.Phi;
 import org.eolang.XmirObject;
 
 /**
- * stop.
+ * Stop.
  *
  * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
@@ -62,6 +62,6 @@ public class EOthread$EOstop extends PhDefault {
                     return new Data.ToPhi(true);
                 }
             )
-    );
+        );
     }
 }
