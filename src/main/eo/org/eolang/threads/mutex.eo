@@ -30,7 +30,7 @@
   # gives a permit and return personal lock
 
   # @todo #12:90min Make it possible to acquire
-  #  the mutex in sec. Now it requires the
+  #  the mutex in seq. Now it requires the
   #  mutex twice if lock was created in seq and
   #  the program goes to dead lock.
   [] > acquire
