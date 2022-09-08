@@ -29,3 +29,4 @@
 [slow] > thread
   [] > join /slow
   [] > start /bool
+  [] > stop /bool

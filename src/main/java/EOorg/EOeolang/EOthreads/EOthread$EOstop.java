@@ -30,48 +30,38 @@
  */
 package EOorg.EOeolang.EOthreads;
 
+import org.eolang.AtComposite;
 import org.eolang.Data;
-import org.eolang.Dataized;
+import org.eolang.PhDefault;
 import org.eolang.Phi;
+import org.eolang.XmirObject;
 
 /**
- * A thread that takes and Dataizes while running.
+ * Stop.
  *
+ * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-final class DataizingThread extends Thread {
-    /**
-     * EOthread.
-     */
-    private Phi thread;
-
-    /**
-     * Computed "slow".
-     */
-    private Phi computed;
-
+@XmirObject(oname = "thread.stop")
+public class EOthread$EOstop extends PhDefault {
     /**
      * Ctor.
-     * @param thread Phi thread
+     *
+     * @param sigma Sigma
      */
-    DataizingThread(final Phi thread) {
-        this.thread = thread;
-    }
-
-    /**
-     * Dataized.
-     * @return The computed slow
-     */
-    public Phi dataized() {
-        return this.computed;
-    }
-
-    // @todo #14:90min Implement handling of
-    //  Interrupted Exaption when the get method
-    //  will throw it. We need to wait for changes
-    //  in eo repository to do that.
-    @Override
-    public void run() {
-        this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
+    public EOthread$EOstop(final Phi sigma) {
+        super(sigma);
+        this.add(
+            "φ",
+            new AtComposite(
+                this,
+                rho -> {
+                    final Phi parent = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(parent);
+                    thr.interrupt();
+                    return new Data.ToPhi(true);
+                }
+            )
+        );
     }
 }
