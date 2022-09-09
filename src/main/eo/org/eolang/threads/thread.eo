@@ -23,7 +23,7 @@
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +package org.eolang.threads
-+rt jvm org.eolang:eo-runtime:0.0.0
++rt jvm org.eolang:eo-threads:0.0.0
 +version 0.0.0
 
 [slow] > thread
