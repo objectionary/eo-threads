@@ -27,14 +27,11 @@
 +version 0.0.0
 
 [permits] > mutex
-  [] > acquire
-    seq > @
-      QQ.io.stdout
-        "Acquires\n"
-      TRUE
+  [locks] > acquire
+    [] > @ /bool
 
-    [] > release
-      seq > @
-        QQ.io.stdout
-          "Releases\n"
-        TRUE
+    # @todo #12:90min We need to count numbers of locks
+    #  and releases in order to throw exceptions
+    #  if there were more releases then locks
+    [releases] > release
+      [] > @ /bool
