@@ -27,3 +27,14 @@
 +version 0.0.0
 
 [permits] > mutex
+  [] > acquire
+    seq > @
+      QQ.io.stdout
+        "Acquires\n"
+      TRUE
+
+    [] > release
+      seq > @
+        QQ.io.stdout
+          "Releases\n"
+        TRUE
