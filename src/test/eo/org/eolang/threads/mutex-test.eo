@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 +alias org.eolang.threads.mutex
++alias org.eolang.threads.thread
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +junit
@@ -30,5 +31,61 @@
 [] > acquire-release
   mutex 100 > m
   seq > @
-    m.acquire > a
+    m.acquire 1 > a
     a.release
+      1
+    m.acquire 1 > b
+    b.release
+      1
+
+[] > double-acquire
+  mutex 2 > m
+  seq > @
+    m.acquire > a
+      1
+    m.acquire > b
+      1
+    a.release
+      1
+    b.release
+      1
+
+[] > acquire-with-locks
+  mutex 100 > m
+  seq > @
+    m.acquire > a
+      100
+    a.release
+      50
+    a.release
+      50
+
+[] > lock-with-threads
+  memory 1 > mem
+  mutex 1 > mut
+  [x] > multiple-by-x
+    seq > @
+      mut.acquire 1 > a
+      mem.write
+        mem.times x
+      a.release 1
+  thread > t1
+    multiple-by-x 2
+  thread > t2
+    multiple-by-x 3
+  seq > @
+    t1.start
+    t2.start
+    t1.join
+    t2.join
+    eq.
+      mem
+      6
+
+# @todo #12:90min Implement teet of mutex
+#  with 2 threads that acquires mutex,
+#  sleep and then releas. So in fact
+#  they must sleep in series, not parallely.
+#  You can do it when sys-call will be released.
+[] > test-with-time
+  nop > @
