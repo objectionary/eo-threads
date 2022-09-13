@@ -52,7 +52,7 @@ public final class Semaphores {
      * They are contained in a map with Phi mutexes as keys
      */
     private final ConcurrentHashMap<Phi, Semaphore> all =
-            new ConcurrentHashMap<>(0);
+        new ConcurrentHashMap<>(0);
 
     /**
      * Ctor.
