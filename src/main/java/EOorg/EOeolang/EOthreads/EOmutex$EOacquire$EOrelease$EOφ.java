@@ -59,15 +59,12 @@ public class EOmutex$EOacquire$EOrelease$EOφ extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    System.out.println("JAVA before mutex in release");
                     final Phi mutex = rho.attr("ρ").get().attr("ρ").get().attr("ρ").get();
-                    System.out.println("JAVA after mutex in release");
                     final long releases = new Dataized(
                         rho.attr("ρ").get().attr("releases").get()
                     ).take(Long.class);
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
                     semaphore.release((int) releases);
-                    System.out.println("JAVA release");
                     return new Data.ToPhi(true);
                 }
             )

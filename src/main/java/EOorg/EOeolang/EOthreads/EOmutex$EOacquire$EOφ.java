@@ -64,7 +64,6 @@ public class EOmutex$EOacquire$EOφ extends PhDefault {
                         rho.attr("ρ").get().attr("locks").get()
                     ).take(Long.class);
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
-                    System.out.println("Java acquires");
                     semaphore.acquire((int) locks);
                     return new Data.ToPhi(true);
                 }
