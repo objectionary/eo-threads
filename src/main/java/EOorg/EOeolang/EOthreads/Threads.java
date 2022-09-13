@@ -61,12 +61,12 @@ final class Threads {
 
     /**
      * Get.
-     * @param eothread Eothread as a key
-     * @return Thread matching to Phi eothread
+     * @param thread Phi thread as a key
+     * @return Thread matching to Phi thread
      */
-    public DataizingThread get(final Phi eothread) {
+    public DataizingThread get(final Phi thread) {
         return this.all.computeIfAbsent(
-            eothread,
+            thread,
             key -> new DataizingThread(key)
         );
     }

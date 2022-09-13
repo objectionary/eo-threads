@@ -20,10 +20,10 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
-+architect yegor256@gmail.com
-+home https://github.com/objectionary/eo
++architect 28lev11@gmail.com
++home https://github.com/objectionary/eo-threads
 +package org.eolang.threads
-+rt jvm org.eolang:eo-runtime:0.0.0
++rt jvm org.eolang:eo-threads:0.0.0
 +version 0.0.0
 
 [millis] > sleep /bool
