@@ -82,7 +82,7 @@
       mem
       6
 
-# @todo #12:90min Implement teet of mutex
+# @todo #12:90min Implement test of mutex
 #  with 2 threads that acquires mutex,
 #  sleep and then releas. So in fact
 #  they must sleep in series, not parallely.
