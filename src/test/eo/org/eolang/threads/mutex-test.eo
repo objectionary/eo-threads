@@ -131,7 +131,7 @@
     t8.start
     t9.start
     t10.start
-    t1.join
+    t0.join
     t1.join
     t2.join
     t3.join
