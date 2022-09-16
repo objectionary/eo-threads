@@ -34,19 +34,23 @@ import java.util.concurrent.ConcurrentHashMap;
 import org.eolang.ExFailure;
 import org.eolang.Phi;
 
-public class Acquires {
-
+/**
+ * All Acquires.
+ *
+ * @since 0.0
+ */
+public final class Acquires {
     /**
-     * EOorg.EOeolang.EOthreads.Acquires.
+     * A map with numbers of opened lock as value.
      */
     public static final Acquires INSTANCE = new Acquires();
 
     /**
-     * All EOorg.EOeolang.EOthreads.Acquires.
-     * They are contained in a map with Phi mutex-acquire as keys
+     * All acquires with values.
+     * They are contained in a map with Phi EOmutex.EOacquire as keys
      */
     private final ConcurrentHashMap<Phi, Integer> all =
-            new ConcurrentHashMap<>(0);
+        new ConcurrentHashMap<>(0);
 
     /**
      * Ctor.
@@ -55,17 +59,29 @@ public class Acquires {
         // Singleton
     }
 
-    public void update(Phi acquire, int num) {
+    /**
+     * Update.
+     *
+     * @param acquire Phi acquire as a key
+     * @param num Current number of locks
+     */
+    public void update(final Phi acquire, final int num) {
         this.all.put(acquire, num);
     }
 
-    public void decrease(Phi acquire, int num) {
+    /**
+     * Decrease.
+     *
+     * @param acquire Phi acquire as a key
+     * @param num Number of locks to release
+     */
+    public void decrease(final Phi acquire, final int num) {
         this.all.putIfAbsent(acquire, 0);
         this.all.compute(
             acquire,
             (key, val) -> {
-                int result = val - num;
-                if (result < 0){
+                final int result = val - num;
+                if (result < 0) {
                     throw new ExFailure("Extra release");
                 }
                 return result;
