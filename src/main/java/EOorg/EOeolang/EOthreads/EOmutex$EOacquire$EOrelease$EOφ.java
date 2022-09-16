@@ -64,7 +64,7 @@ public class EOmutex$EOacquire$EOrelease$EOφ extends PhDefault {
                     final long releases = new Dataized(
                         rho.attr("ρ").get().attr("releases").get()
                     ).take(Long.class);
-                    synchronized(acquire) {
+                    synchronized (acquire) {
                         Acquires.INSTANCE.decrease(acquire, (int) releases);
                         final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
                         semaphore.release((int) releases);
