@@ -70,6 +70,7 @@
       mem.write
         mem.times x
       a.release 1
+      TRUE
   thread > t1
     multiple-by-x 2
   thread > t2
