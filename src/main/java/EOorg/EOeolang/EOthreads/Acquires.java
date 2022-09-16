@@ -30,49 +30,46 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import java.util.concurrent.Semaphore;
-import org.eolang.AtComposite;
-import org.eolang.Data;
-import org.eolang.Dataized;
-import org.eolang.PhDefault;
+import java.util.concurrent.ConcurrentHashMap;
+import org.eolang.ExFailure;
 import org.eolang.Phi;
-import org.eolang.XmirObject;
 
-/**
- * Release.
- *
- * @checkstyle TypeNameCheck (5 lines)
- * @since 0.0
- */
-@XmirObject(oname = "mutex.acquire.release.φ")
-public class EOmutex$EOacquire$EOrelease$EOφ extends PhDefault {
+public class Acquires {
+
+    /**
+     * EOorg.EOeolang.EOthreads.Acquires.
+     */
+    public static final Acquires INSTANCE = new Acquires();
+
+    /**
+     * All EOorg.EOeolang.EOthreads.Acquires.
+     * They are contained in a map with Phi mutex-acquire as keys
+     */
+    private final ConcurrentHashMap<Phi, Integer> all =
+            new ConcurrentHashMap<>(0);
 
     /**
      * Ctor.
-     *
-     * @param sigma Sigma
      */
-    public EOmutex$EOacquire$EOrelease$EOφ(final Phi sigma) {
-        super(sigma);
-        this.add(
-            "φ",
-            new AtComposite(
-                this,
-                rho -> {
-                    final Phi acquire = rho.attr("ρ").get().attr("ρ").get();
-                    final Phi mutex = acquire.attr("ρ").get();
-                    final long releases = new Dataized(
-                        rho.attr("ρ").get().attr("releases").get()
-                    ).take(Long.class);
-                    synchronized(acquire) {
-                        Acquires.INSTANCE.decrease(acquire, (int) releases);
-                        final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
-                        semaphore.release((int) releases);
-                    }
-                    return new Data.ToPhi(true);
-                }
-            )
-        );
+    private Acquires() {
+        // Singleton
     }
 
+    public void update(Phi acquire, int num) {
+        this.all.put(acquire, num);
+    }
+
+    public void decrease(Phi acquire, int num) {
+        this.all.putIfAbsent(acquire, 0);
+        this.all.compute(
+            acquire,
+            (key, val) -> {
+                int result = val - num;
+                if (result < 0){
+                    throw new ExFailure("Extra release");
+                }
+                return result;
+            }
+        );
+    }
 }

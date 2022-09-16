@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
++alias org.eolang.hamcrest.assert-that
 +alias org.eolang.threads.mutex
 +alias org.eolang.threads.thread
 +architect 28lev11@gmail.com
@@ -81,6 +82,65 @@
     eq.
       mem
       6
+
+[] > overrelease
+  mutex 1 > m
+  assert-that > @
+    try
+      []
+        seq > @
+          m.acquire > a
+            1
+          a.release 2
+      [e]
+        e > @
+      nop
+    $.equal-to
+      "Extra release"
+
+[] > stress-test
+  mutex 3 > m
+  [] > lock-unlock
+    seq > @
+      m.acquire 1 > a
+      a.release 1
+      TRUE
+  thread > t0
+    lock-unlock
+  t0' > t1
+  t0' > t2
+  t0' > t3
+  t0' > t4
+  t0' > t5
+  t0' > t6
+  t0' > t7
+  t0' > t8
+  t0' > t9
+  t0' > t10
+
+  seq > @
+    t0.start
+    t1.start
+    t2.start
+    t3.start
+    t4.start
+    t5.start
+    t6.start
+    t7.start
+    t8.start
+    t9.start
+    t10.start
+    t1.join
+    t1.join
+    t2.join
+    t3.join
+    t4.join
+    t5.join
+    t6.join
+    t7.join
+    t8.join
+    t9.join
+    t10.join
 
 # @todo #12:90min Implement test of mutex
 #  with 2 threads that acquires mutex,
