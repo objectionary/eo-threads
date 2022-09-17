@@ -64,17 +64,18 @@
 [] > lock-with-threads
   memory 1 > mem
   mutex 1 > mut
-  [x] > multiple-by-x
-    seq > @
+  thread > t1
+    seq
       mut.acquire 1 > a
       mem.write
-        mem.times x
+        mem.times 2
       a.release 1
-      TRUE
-  thread > t1
-    multiple-by-x 2
   thread > t2
-    multiple-by-x 3
+    seq
+      mut.acquire 1 > b
+      mem.write
+        mem.times 3
+      b.release 1
   seq > @
     t1.start
     t2.start
@@ -101,24 +102,61 @@
 
 [] > stress-test
   mutex 3 > m
-  [] > lock-unlock
-    seq > @
-      m.acquire 1 > a
-      a.release 1
-      TRUE
   thread > t0
-    lock-unlock
-  t0' > t1
-  t0' > t2
-  t0' > t3
-  t0' > t4
-  t0' > t5
-  t0' > t6
-  t0' > t7
-  t0' > t8
-  t0' > t9
-  t0' > t10
-
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t1
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t2
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t3
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t4
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t5
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t6
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t7
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t8
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t9
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
+  thread > t10
+    []
+      seq > @
+        m.acquire 1 > a
+        a.release 1
   seq > @
     t0.start
     t1.start
