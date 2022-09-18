@@ -30,8 +30,10 @@
  */
 package EOorg.EOeolang.EOthreads;
 
+import java.util.Optional;
 import org.eolang.Data;
 import org.eolang.Dataized;
+import org.eolang.ExAbstract;
 import org.eolang.Phi;
 
 /**
@@ -43,12 +45,17 @@ final class DataizingThread extends Thread {
     /**
      * EOthread.
      */
-    private Phi thread;
+    private final Phi thread;
 
     /**
      * Computed "slow".
      */
     private Phi computed;
+
+    /**
+     * Exception if dataization goes wrong.
+     */
+    private ExAbstract failure;
 
     /**
      * Ctor.
@@ -63,7 +70,9 @@ final class DataizingThread extends Thread {
      * @return The computed slow
      */
     public Phi dataized() {
-        return this.computed;
+        return Optional.ofNullable(this.computed).orElseThrow(
+            () -> this.failure
+        );
     }
 
     // @todo #14:90min Implement handling of
@@ -72,6 +81,10 @@ final class DataizingThread extends Thread {
     //  in eo repository to do that.
     @Override
     public void run() {
-        this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
+        try {
+            this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
+        } catch (final ExAbstract ex) {
+            this.failure = ex;
+        }
     }
 }
