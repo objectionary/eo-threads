@@ -39,11 +39,11 @@ import org.eolang.Phi;
  *
  * @since 0.0
  */
-public final class Acquires {
+public final class Acquisitions {
     /**
      * A map with numbers of opened lock as value.
      */
-    public static final Acquires INSTANCE = new Acquires();
+    public static final Acquisitions INSTANCE = new Acquisitions();
 
     /**
      * All acquires with values.
@@ -55,7 +55,7 @@ public final class Acquires {
     /**
      * Ctor.
      */
-    private Acquires() {
+    private Acquisitions() {
         // Singleton
     }
 
@@ -76,13 +76,15 @@ public final class Acquires {
      * @param num Number of locks to release
      */
     public void decrease(final Phi acquire, final int num) {
-        this.all.putIfAbsent(acquire, 0);
+        if (!this.all.containsKey(acquire)) {
+            throw new ExFailure("The lock was not acquired yet");
+        }
         this.all.compute(
             acquire,
             (key, val) -> {
                 final int result = val - num;
                 if (result < 0) {
-                    throw new ExFailure("Extra release");
+                    throw new ExFailure("The lock cannot be release more then acquired");
                 }
                 return result;
             }
