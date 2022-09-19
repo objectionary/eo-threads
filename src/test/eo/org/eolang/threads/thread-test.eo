@@ -20,6 +20,7 @@
 # OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
 # SOFTWARE.
 
++alias org.eolang.hamcrest.assert-that
 +alias org.eolang.threads.thread
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
@@ -75,3 +76,18 @@
         a.join
         b.join
       8
+
+[] > divide-by-zero-in-thread
+  thread > t
+    1.div 0
+  assert-that > @
+    seq
+      t.start
+      try
+        []
+          t.join > @
+        [e]
+          e > @
+        nop
+    $.equal-to
+      "The 1th argument of 'int.div' is invalid: division by zero is infinity"
