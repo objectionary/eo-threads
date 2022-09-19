@@ -90,4 +90,4 @@
           e > @
         nop
     $.equal-to
-      "The lock cannot be release more then acquired"
+      "The 1th argument of 'int.div' is invalid: division by zero is infinity"
