@@ -64,7 +64,7 @@ public class EOmutex$EOacquire$EOφ extends PhDefault {
                     final long locks = new Dataized(
                         acquire.attr("locks").get()
                     ).take(Long.class);
-                    Acquires.INSTANCE.update(
+                    Acquisitions.INSTANCE.update(
                         acquire,
                         (int) locks
                     );
