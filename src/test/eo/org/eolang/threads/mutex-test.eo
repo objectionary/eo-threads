@@ -41,25 +41,25 @@
 
 [] > double-acquire
   mutex 2 > m
-  seq > @
-    m.acquire > a
-      1
-    m.acquire > b
-      1
-    a.release
-      1
-    b.release
-      1
+  assert-that > @
+    seq
+      m.acquire 1 > a
+      m.acquire 1 > b
+      a.release 1
+      b.release 1
+    $.equal-to TRUE
 
 [] > acquire-with-locks
   mutex 100 > m
-  seq > @
-    m.acquire > a
-      100
-    a.release
-      50
-    a.release
-      50
+  assert-that > @
+    seq
+      m.acquire > a
+        100
+      a.release
+        50
+      a.release
+        50
+    $.equal-to TRUE
 
 [] > lock-with-threads
   memory 1 > mem
@@ -76,13 +76,14 @@
       mem.write
         mem.times 3
       b.release 1
-  seq > @
-    t1.start
-    t2.start
-    t1.join
-    t2.join
-    eq.
+  assert-that > @
+    seq
+      t1.start
+      t2.start
+      t1.join
+      t2.join
       mem
+    $.equal-to
       6
 
 [] > overrelease
@@ -157,29 +158,32 @@
       seq > @
         m.acquire 1 > a
         a.release 1
-  seq > @
-    t0.start
-    t1.start
-    t2.start
-    t3.start
-    t4.start
-    t5.start
-    t6.start
-    t7.start
-    t8.start
-    t9.start
-    t10.start
-    t0.join
-    t1.join
-    t2.join
-    t3.join
-    t4.join
-    t5.join
-    t6.join
-    t7.join
-    t8.join
-    t9.join
-    t10.join
+  assert-that > @
+    seq
+      t0.start
+      t1.start
+      t2.start
+      t3.start
+      t4.start
+      t5.start
+      t6.start
+      t7.start
+      t8.start
+      t9.start
+      t10.start
+      and.
+        t0.join
+        t1.join
+        t2.join
+        t3.join
+        t4.join
+        t5.join
+        t6.join
+        t7.join
+        t8.join
+        t9.join
+        t10.join
+    $.equal-to TRUE
 
 # @todo #12:90min Implement test of mutex
 #  with 2 threads that acquires mutex,
