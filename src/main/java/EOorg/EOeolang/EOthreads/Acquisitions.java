@@ -66,7 +66,7 @@ public final class Acquisitions {
      * @param num Current number of locks
      */
     public void update(final Phi acquire, final int num) {
-        if (this.all.containsKey(acquire)){
+        if (this.all.containsKey(acquire)) {
             throw new ExFailure("The lock is already added");
         }
         this.all.put(acquire, num);
