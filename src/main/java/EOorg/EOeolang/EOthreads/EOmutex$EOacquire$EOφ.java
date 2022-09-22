@@ -65,7 +65,7 @@ public class EOmutex$EOacquire$EOφ extends PhDefault {
                         acquire.attr("locks").get()
                     ).take(Long.class);
                     Acquisitions.INSTANCE.update(
-                        acquire.hashCode(),
+                        acquire,
                         (int) locks
                     );
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
