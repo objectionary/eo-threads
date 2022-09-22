@@ -99,7 +99,7 @@
         e > @
       nop
     $.equal-to
-      "The lock cannot be release more then acquired"
+      "The lock cannot be release more than acquired"
 
 [] > stress-test
   mutex 3 > m

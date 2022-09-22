@@ -87,7 +87,7 @@ public final class Acquisitions {
             (key, val) -> {
                 final int result = val - num;
                 if (result < 0) {
-                    throw new ExFailure("The lock cannot be release more then acquired");
+                    throw new ExFailure("The lock cannot be release more than acquired");
                 }
                 return result;
             }
