@@ -67,7 +67,7 @@ public class EOmutex$EOacquire$EOrelease$EOφ extends PhDefault {
                     synchronized (acquire) {
                         final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
                         semaphore.release((int) releases);
-                        Acquisitions.INSTANCE.decrease(acquire, (int) releases);
+                        Acquisitions.INSTANCE.decrease(acquire.hashCode(), (int) releases);
                     }
                     return new Data.ToPhi(true);
                 }

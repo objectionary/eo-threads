@@ -49,7 +49,7 @@ public final class Acquisitions {
      * All acquires with values.
      * They are contained in a map with Phi EOmutex.EOacquire as keys
      */
-    private final ConcurrentHashMap<Phi, Integer> all =
+    private final ConcurrentHashMap<Integer, Integer> all =
         new ConcurrentHashMap<>(0);
 
     /**
@@ -65,8 +65,9 @@ public final class Acquisitions {
      * @param acquire Phi acquire as a key
      * @param num Current number of locks
      */
-    public void update(final Phi acquire, final int num) {
+    public void update(final int acquire, final int num) {
         this.all.put(acquire, num);
+        System.out.println("UPDATE Size of Acquisitions = " + this.all.size());
     }
 
     /**
@@ -75,7 +76,7 @@ public final class Acquisitions {
      * @param acquire Phi acquire as a key
      * @param num Number of locks to release
      */
-    public void decrease(final Phi acquire, final int num) {
+    public void decrease(final int acquire, final int num) {
         if (!this.all.containsKey(acquire)) {
             throw new ExFailure("The lock was not acquired yet");
         }
@@ -89,5 +90,6 @@ public final class Acquisitions {
                 return result;
             }
         );
+        System.out.println("DECREASE Size of Acquisitions = " + this.all.size());
     }
 }
