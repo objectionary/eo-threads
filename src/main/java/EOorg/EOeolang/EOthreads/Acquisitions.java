@@ -67,7 +67,8 @@ public final class Acquisitions {
      */
     public void update(final Phi acquire, final int num) {
         if (this.all.containsKey(acquire)) {
-            throw new ExFailure("The lock is already added");
+            //throw new ExFailure("The lock is already added");
+            System.out.println("The lock is already added with hashcode = " + acquire.hashCode());
         }
         this.all.put(acquire, num);
     }
