@@ -94,6 +94,26 @@
     $.equal-to
       "The 1th argument of 'int.div' is invalid: division by zero is infinity"
 
+[] > gettimeofday-returns-in-nanos
+  memory 0 > start
+  memory 0 > finish
+  if. > @
+    QQ.sys.uname.is-windows
+    nop
+    assert-that
+      seq
+        start.write
+          call "gettimeofday"
+        sleep 200
+        finish.write
+          call "gettimeofday"
+        finish.minus start
+      $.all-of
+        $.less-than
+          300000
+        $.greater-than
+          100000
+
 [] > parallel-sleep
   thread > t1
     sleep 200
