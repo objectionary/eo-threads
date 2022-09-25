@@ -22,6 +22,7 @@
 
 +alias org.eolang.hamcrest.assert-that
 +alias org.eolang.sys.call
++alias org.eolang.txt.text
 +alias org.eolang.threads.thread
 +alias org.eolang.threads.sleep
 +architect 28lev11@gmail.com
@@ -138,3 +139,30 @@
           finish.minus start
           600000
       $.equal-to TRUE
+
+[] > thread-stops
+  thread > t
+    sleep 1000
+  assert-that > @
+    seq
+      t.start
+      t.stop
+      try
+        []
+          t.join > @
+        [e]
+          slice. > @
+            text
+              e
+            0
+            20
+        nop
+    $.equal-to
+      "Cannot give dataized"
+
+# @todo #14:60min Impplement test
+#  that stoppes a thread and check
+#  if the thread is running. We need
+#  is-running attribute for this
+[] > is-running-after-stop
+  nop > @
