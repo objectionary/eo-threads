@@ -34,6 +34,8 @@ import java.util.Optional;
 import org.eolang.Data;
 import org.eolang.Dataized;
 import org.eolang.ExAbstract;
+import org.eolang.ExFailure;
+import org.eolang.ExInterrupted;
 import org.eolang.Phi;
 
 /**
@@ -83,6 +85,11 @@ final class DataizingThread extends Thread {
     public void run() {
         try {
             this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
+        } catch (final ExInterrupted ex) {
+            this.failure = new ExFailure(
+                "Cannot give dataized \"slow\" since thread \"%s\" was stopped",
+                this.thread.toString()
+            );
         } catch (final ExAbstract ex) {
             this.failure = ex;
         }
