@@ -160,6 +160,6 @@
 # @todo #14:60min Impplement test
 #  that stops a thread and checks
 #  if the thread is running. We need
-#  is-running attribute for this
+#  is-running attribute to use it
 [] > is-running-after-stop
   nop > @
