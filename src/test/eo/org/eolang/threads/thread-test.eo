@@ -113,5 +113,5 @@
         call "gettimeofday"
       lt.
         finish.minus start
-        300000
+        390000
     $.equal-to TRUE
