@@ -22,7 +22,6 @@
 
 +alias org.eolang.hamcrest.assert-that
 +alias org.eolang.sys.call
-+alias org.eolang.txt.text
 +alias org.eolang.threads.thread
 +alias org.eolang.threads.sleep
 +architect 28lev11@gmail.com
@@ -151,9 +150,7 @@
         []
           t.join > @
         [e]
-          slice. > @
-            text
-              e
+          e.slice > @
             0
             20
         nop
@@ -161,7 +158,7 @@
       "Cannot give dataized"
 
 # @todo #14:60min Impplement test
-#  that stoppes a thread and check
+#  that stops a thread and checks
 #  if the thread is running. We need
 #  is-running attribute for this
 [] > is-running-after-stop
