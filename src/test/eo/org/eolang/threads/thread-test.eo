@@ -21,6 +21,7 @@
 # SOFTWARE.
 
 +alias org.eolang.hamcrest.assert-that
++alias org.eolang.sys.call
 +alias org.eolang.threads.thread
 +alias org.eolang.threads.sleep
 +architect 28lev11@gmail.com
@@ -93,31 +94,24 @@
     $.equal-to
       "The 1th argument of 'int.div' is invalid: division by zero is infinity"
 
-[] > parallel-sleeping
+[] > parallel-sleep
   thread > t1
     sleep 200
   thread > t2
     sleep 200
-  seq > @
-    QQ.sys.call > start
-      "gettimeofday"
-    t1.start
-    t2.start
-    t1.join
-    t2.join
-    QQ.sys.call > finish
-      "gettimeofday"
-    lte.
-      minus.
-        finish
-        start
-      300
-
-[] > get-time-of-day-test
-  if. > @
-    QQ.sys.uname.is-windows
-    nop
-    assert-that
-      QQ.sys.call
-        "gettimeofday"
-      $.greater-than 0
+  memory 0 > start
+  memory 0 > finish
+  assert-that > @
+    seq
+      start.write
+        call "gettimeofday"
+      t1.start
+      t2.start
+      t1.join
+      t2.join
+      finish.write
+        call "gettimeofday"
+      lt.
+        finish.minus start
+        300000
+    $.equal-to TRUE
