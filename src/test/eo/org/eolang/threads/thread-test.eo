@@ -116,9 +116,9 @@
 
 [] > parallel-sleep
   thread > t1
-    sleep 200
+    sleep 300
   thread > t2
-    sleep 200
+    sleep 300
   memory 0 > start
   memory 0 > finish
   if. > @
@@ -136,5 +136,5 @@
           call "gettimeofday"
         lt.
           finish.minus start
-          400000
+          600000
       $.equal-to TRUE
