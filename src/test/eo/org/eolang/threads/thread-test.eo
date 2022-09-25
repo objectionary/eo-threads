@@ -110,7 +110,7 @@
         finish.minus start
       $.all-of
         $.less-than
-          300000
+          1000000
         $.greater-than
           100000
 
