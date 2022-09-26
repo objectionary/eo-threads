@@ -21,7 +21,9 @@
 # SOFTWARE.
 
 +alias org.eolang.hamcrest.assert-that
++alias org.eolang.sys.call
 +alias org.eolang.threads.thread
++alias org.eolang.threads.sleep
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +junit
@@ -91,3 +93,104 @@
         nop
     $.equal-to
       "The 1th argument of 'int.div' is invalid: division by zero is infinity"
+
+[] > gettimeofday-returns-in-nanos
+  memory 0 > start
+  memory 0 > finish
+  if. > @
+    QQ.sys.uname.is-windows
+    nop
+    assert-that
+      seq
+        start.write
+          call "gettimeofday"
+        sleep 200
+        finish.write
+          call "gettimeofday"
+        finish.minus start
+      $.all-of
+        $.less-than
+          1000000
+        $.greater-than
+          100000
+
+[] > parallel-sleep
+  thread > t1
+    sleep 300
+  thread > t2
+    sleep 300
+  memory 0 > start
+  memory 0 > finish
+  if. > @
+    QQ.sys.uname.is-windows
+    nop
+    assert-that
+      seq
+        start.write
+          call "gettimeofday"
+        t1.start
+        t2.start
+        t1.join
+        t2.join
+        finish.write
+          call "gettimeofday"
+        lt.
+          finish.minus start
+          600000
+      $.equal-to TRUE
+
+[] > thread-stops
+  thread > t
+    sleep 1000
+  assert-that > @
+    seq
+      t.start
+      t.stop
+      try
+        []
+          t.join > @
+        [e]
+          e.slice > @
+            0
+            20
+        nop
+    $.equal-to
+      "Cannot give dataized"
+
+[] > is-running-after-stop
+  thread > t
+    sleep 10000
+  assert-that > @
+    seq
+      t.start
+      t.stop
+      sleep 200
+      t.is-running
+    $.equal-to
+      FALSE
+
+[] > is-running-1
+  thread > t
+    TRUE
+  assert-that > @
+    t.is-running
+    $.equal-to FALSE
+
+[] > is-running-2
+  thread > t
+    sleep 300
+  assert-that > @
+    seq
+      t.start
+      t.is-running
+    $.equal-to TRUE
+
+[] > is-running-3
+  thread > t
+    sleep 50
+  assert-that > @
+    seq
+      t.start
+      t.join
+      t.is-running
+    $.equal-to FALSE
