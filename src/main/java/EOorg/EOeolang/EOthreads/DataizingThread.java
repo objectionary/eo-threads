@@ -77,10 +77,6 @@ final class DataizingThread extends Thread {
         );
     }
 
-    // @todo #14:90min Implement handling of
-    //  Interrupted Exaption when the get method
-    //  will throw it. We need to wait for changes
-    //  in eo repository to do that.
     @Override
     public void run() {
         try {
