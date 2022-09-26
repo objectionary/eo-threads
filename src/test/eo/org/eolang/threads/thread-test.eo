@@ -163,3 +163,29 @@
 #  is-running attribute to use it
 [] > is-running-after-stop
   nop > @
+
+[] > is-running-1
+  thread > t
+    TRUE
+  assert-that > @
+    t.is-running
+    $.equal-to FALSE
+
+[] > is-running-2
+  thread > t
+    sleep 300
+  assert-that > @
+    seq
+      t.start
+      t.is-running
+    $.equal-to TRUE
+
+[] > is-running-3
+  thread > t
+    sleep 50
+  assert-that > @
+    seq
+      t.start
+      t.join
+      t.is-running
+    $.equal-to FALSE
