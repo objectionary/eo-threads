@@ -157,12 +157,17 @@
     $.equal-to
       "Cannot give dataized"
 
-# @todo #14:60min Impplement test
-#  that stops a thread and checks
-#  if the thread is running. We need
-#  is-running attribute to use it
 [] > is-running-after-stop
-  nop > @
+  thread > t
+    sleep 10000
+  assert-that > @
+    seq
+      t.start
+      t.stop
+      sleep 200
+      t.is-running
+    $.equal-to
+      FALSE
 
 [] > is-running-1
   thread > t
