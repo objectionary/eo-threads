@@ -30,64 +30,37 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import java.util.Optional;
+import org.eolang.AtComposite;
 import org.eolang.Data;
-import org.eolang.Dataized;
-import org.eolang.ExAbstract;
-import org.eolang.ExFailure;
-import org.eolang.ExInterrupted;
+import org.eolang.PhDefault;
 import org.eolang.Phi;
+import org.eolang.XmirObject;
 
 /**
- * A thread that takes and Dataizes while running.
+ * Is-running.
  *
+ * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-final class DataizingThread extends Thread {
-    /**
-     * EOthread.
-     */
-    private final Phi thread;
-
-    /**
-     * Computed "slow".
-     */
-    private Phi computed;
-
-    /**
-     * Exception if dataization goes wrong.
-     */
-    private ExAbstract failure;
-
+@XmirObject(oname = "thread.is-running")
+public class EOthread$EOis_running extends PhDefault {
     /**
      * Ctor.
-     * @param thread Phi thread
+     *
+     * @param sigma Sigma
      */
-    DataizingThread(final Phi thread) {
-        this.thread = thread;
-    }
-
-    /**
-     * Dataized.
-     * @return The computed slow
-     */
-    public Phi dataized() {
-        return Optional.ofNullable(this.computed).orElseThrow(
-            () -> this.failure
+    public EOthread$EOis_running(final Phi sigma) {
+        super(sigma);
+        this.add(
+            "φ",
+            new AtComposite(
+                this,
+                rho -> {
+                    final Phi parent = rho.attr("ρ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(parent);
+                    return new Data.ToPhi(thr.isAlive());
+                }
+            )
         );
-    }
-
-    @Override
-    public void run() {
-        try {
-            this.computed = new Data.ToPhi(new Dataized(this.thread.attr("slow").get()).take());
-        } catch (final ExInterrupted ex) {
-            this.failure = new ExFailure(
-                "Cannot give dataized \"slow\" since thread \"%s\" was stopped",
-                this.thread.toString()
-            );
-        } catch (final ExAbstract ex) {
-            this.failure = ex;
-        }
     }
 }

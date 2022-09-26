@@ -30,3 +30,4 @@
   [] > join /slow
   [] > start /bool
   [] > stop /bool
+  [] > is-running /bool
