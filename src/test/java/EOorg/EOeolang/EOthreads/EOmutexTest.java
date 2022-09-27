@@ -66,12 +66,11 @@ public class EOmutexTest {
         );
     }
 
-    // @todo #33:90min Uncomment this test when
-    //  the of same hashcodes in parallel threads
+    // @todo #33:90min Uncomment this test when problem
+    //  of the of same hashcodes in parallel threads
     //  will be solved. This test proves new Phi objects
     //  created in parallel threads can have repeated
     //  hashcodes
-
     //@Test
     //public void PhiUniqueHashesInDynamic() throws InterruptedException {
     //    int threads = 8;
@@ -104,11 +103,6 @@ public class EOmutexTest {
     //    );
     //}
 
-    // @todo #33:90min Implement test
-    //  like the test PhiUniqueHashesInDynamic
-    //  where new Phi objects are created in parallel
-    //  instead of by one thread. We need to wait for
-    // the solving of hashcode problem
     @Test
     public void acquisitionUpdateDecrease() throws InterruptedException {
         final int threads = 10;
@@ -138,6 +132,11 @@ public class EOmutexTest {
             Matchers.equalTo(true)
         );
     }
+
+    // @todo #33:90min Implement test like the test
+    //  before where new Phi objects are created in
+    //  parallel instead of one thread. We need to
+    //  wait for the solving of hashcode problem
 
     @Test
     public void differentReleasesOfOneAcquire() throws InterruptedException {
