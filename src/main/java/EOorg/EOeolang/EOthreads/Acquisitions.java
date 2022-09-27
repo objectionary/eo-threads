@@ -67,8 +67,9 @@ public final class Acquisitions {
      */
     public void update(final Phi acquire, final int num) {
         if (this.all.containsKey(acquire)) {
-            //throw new ExFailure("The lock is already added");
-            System.out.println("The lock is already added with hashcode = " + acquire.hashCode());
+            throw new ExFailure(
+                String.format("The lock is already added with hashcode = %d", acquire.hashCode())
+            );
         }
         this.all.put(acquire, num);
     }
@@ -88,7 +89,13 @@ public final class Acquisitions {
             (key, val) -> {
                 final int result = val - num;
                 if (result < 0) {
-                    throw new ExFailure("The lock cannot be release more than acquired");
+                    throw new ExFailure(
+                        String.format(
+                            "The lock cannot be released more than acquired. The lock was %d, but wanted decrease by %d",
+                            val,
+                            num
+                        )
+                    );
                 }
                 return result;
             }
