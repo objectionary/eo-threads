@@ -66,12 +66,20 @@ public final class Acquisitions {
      * @param num Current number of locks
      */
     public void update(final Phi acquire, final int num) {
-        if (this.all.containsKey(acquire)) {
-            throw new ExFailure(
-                String.format("The lock is already added with hashcode = %d", acquire.hashCode())
-            );
-        }
-        this.all.put(acquire, num);
+        this.all.compute(
+            acquire,
+            (key, val) -> {
+                if (val != null) {
+                    throw new ExFailure(
+                        String.format(
+                            "The lock is already added with hashcode = %d",
+                            key.hashCode()
+                        )
+                    );
+                }
+                return num;
+            }
+        );
     }
 
     /**
@@ -81,13 +89,13 @@ public final class Acquisitions {
      * @param num Number of locks to release
      */
     public void decrease(final Phi acquire, final int num) {
-        if (!this.all.containsKey(acquire)) {
-            throw new ExFailure("The lock was not acquired yet");
-        }
         this.all.compute(
             acquire,
             (key, val) -> {
-                final int result = val - num;
+                if (val == null) {
+                    throw new ExFailure("The lock was not acquired yet");
+                }
+                Integer result = val - num;
                 if (result < 0) {
                     throw new ExFailure(
                         String.format(
@@ -96,6 +104,9 @@ public final class Acquisitions {
                             num
                         )
                     );
+                }
+                if (result == 0) {
+                    result = null;
                 }
                 return result;
             }
