@@ -93,7 +93,7 @@ public class EOmutexTest {
                         "n",
                         new Data.ToPhi(local)
                     );
-                    return number.hashCode();
+                    return hashes.add(number.hashCode());
                 }
             );
         }
