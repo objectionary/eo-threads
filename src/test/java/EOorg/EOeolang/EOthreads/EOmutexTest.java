@@ -30,17 +30,22 @@
  */
 package EOorg.EOeolang.EOthreads;
 
+import EOorg.EOeolang.EOmath.EOnumber;
 import java.util.HashSet;
 import java.util.Set;
+import java.util.concurrent.ConcurrentHashMap;
 import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import org.eolang.Data;
 import org.eolang.ExFailure;
+import org.eolang.PhWith;
 import org.eolang.Phi;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
 import org.junit.jupiter.api.Assertions;
+import org.junit.jupiter.api.Disabled;
 import org.junit.jupiter.api.Test;
 
 /**
@@ -71,38 +76,39 @@ public class EOmutexTest {
     //  will be solved. This test proves new Phi objects
     //  created in parallel threads can have repeated
     //  hashcodes
-    //@Test
-    //public void PhiUniqueHashesInDynamic() throws InterruptedException {
-    //    int threads = 8;
-    //    Set<Integer> hashes = ConcurrentHashMap.newKeySet();
-    //    ExecutorService service = Executors.newFixedThreadPool(threads);
-    //    CountDownLatch latch = new CountDownLatch(1);
-    //    for (long t = 0; t < threads; ++t) {
-    //        final long finalT = t;
-    //        service.submit(
-    //            () -> {
-    //                latch.await();
-    //                Phi number = new PhWith(
-    //                    new EOnumber(Phi.Φ),
-    //                    "n",
-    //                    new Data.ToPhi(finalT)
-    //                );
-    //                System.out.println("Hashcode = " + number.hashCode() + ", n = " + finalT);
-    //                if (!hashes.add(number.hashCode())){
-    //                    System.out.println("Repeated hashcode = " + number.hashCode());
-    //                }
-    //                return number.hashCode();
-    //            }
-    //        );
-    //    }
-    //    latch.countDown();
-    //    service.awaitTermination(1, TimeUnit.SECONDS);
-    //    MatcherAssert.assertThat(
-    //        hashes.size(),
-    //        Matchers.equalTo(threads)
-    //    );
-    //}
+    @Disabled
+    @Test
+    public void phiUniqueHashesInDynamic() throws InterruptedException {
+        final int threads = 8;
+        final Set<Integer> hashes = ConcurrentHashMap.newKeySet();
+        final ExecutorService service = Executors.newFixedThreadPool(threads);
+        final CountDownLatch latch = new CountDownLatch(1);
+        for (long counter = 0; counter < threads; ++counter) {
+            final long local = counter;
+            service.submit(
+                () -> {
+                    latch.await();
+                    final Phi number = new PhWith(
+                        new EOnumber(Phi.Φ),
+                        "n",
+                        new Data.ToPhi(local)
+                    );
+                    return number.hashCode();
+                }
+            );
+        }
+        latch.countDown();
+        service.awaitTermination(1, TimeUnit.SECONDS);
+        MatcherAssert.assertThat(
+            hashes.size(),
+            Matchers.equalTo(threads)
+        );
+    }
 
+    // @todo #33:90min Implement test like the test
+    //  below where new Phi objects are created in
+    //  parallel instead of one thread. We need to
+    //  wait for the solving of hashcode problem
     @Test
     public void acquisitionUpdateDecrease() throws InterruptedException {
         final int threads = 10;
@@ -132,11 +138,6 @@ public class EOmutexTest {
             Matchers.equalTo(true)
         );
     }
-
-    // @todo #33:90min Implement test like the test
-    //  before where new Phi objects are created in
-    //  parallel instead of one thread. We need to
-    //  wait for the solving of hashcode problem
 
     @Test
     public void differentReleasesOfOneAcquire() throws InterruptedException {
