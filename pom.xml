@@ -101,6 +101,11 @@ SOFTWARE.
       <version>5.9.1</version>
       <scope>test</scope>
     </dependency>
+    <dependency>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.54.0</version>
+    </dependency>
   </dependencies>
   <build>
     <plugins>
