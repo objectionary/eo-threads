@@ -27,7 +27,11 @@
 +version 0.0.0
 
 [slow] > thread
+  TRUE > @
   [] > join /slow
   [] > start /bool
+  seq > start2
+    start
+    ^
   [] > stop /bool
   [] > is-running /bool

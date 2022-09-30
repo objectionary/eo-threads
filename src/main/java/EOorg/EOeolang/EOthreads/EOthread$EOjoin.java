@@ -57,6 +57,7 @@ public class EOthread$EOjoin extends PhDefault {
                 this,
                 rho -> {
                     final Phi parent = rho.attr("ρ").get();
+                    System.out.println("In join hashcode = " + parent.hashCode());
                     final DataizingThread thr = Threads.INSTANCE.get(parent);
                     thr.join();
                     return thr.dataized();

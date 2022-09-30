@@ -58,7 +58,10 @@ public class EOthread$EOstart extends PhDefault {
                 rho -> {
                     final Phi parent = rho.attr("ρ").get();
                     final DataizingThread thr = Threads.INSTANCE.get(parent);
-                    thr.start();
+                    if (thr.getState() == Thread.State.NEW) {
+                        thr.start();
+                    }
+                    System.out.println("In start Hashcode = " + parent.hashCode());
                     return new Data.ToPhi(true);
                 }
             )

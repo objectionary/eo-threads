@@ -57,6 +57,7 @@ public class EOthread$EOis_running extends PhDefault {
                 this,
                 rho -> {
                     final Phi parent = rho.attr("ρ").get();
+                    System.out.println("In is-running parent hashcode = " + parent.hashCode());
                     final DataizingThread thr = Threads.INSTANCE.get(parent);
                     return new Data.ToPhi(thr.isAlive());
                 }

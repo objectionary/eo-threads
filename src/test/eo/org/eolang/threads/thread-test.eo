@@ -194,3 +194,29 @@
       t.join
       t.is-running
     $.equal-to FALSE
+
+[] > is-running-after-start
+  thread > t
+    sleep 1000
+  assert-that > @
+    is-running.
+      seq
+        t.start
+        t
+    $.equal-to TRUE
+
+[] > returns-thread
+  while. > @
+    is-running.
+      start.
+        thread > t
+          sleep 50000
+    [i]
+      seq > @
+        QQ.io.stdout
+          "still waiting..."
+        sleep 50
+        if.
+          i.gt 10
+          t.stop
+          TRUE
