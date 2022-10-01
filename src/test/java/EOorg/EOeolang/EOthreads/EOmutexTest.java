@@ -40,6 +40,7 @@ import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
+import org.cactoos.experimental.Threads;
 import org.cactoos.Scalar;
 import org.eolang.Data;
 import org.eolang.ExFailure;
@@ -128,7 +129,7 @@ public class EOmutexTest {
             );
         }
         Assertions.assertDoesNotThrow(
-            () -> new org.cactoos.experimental.Threads<>(
+            () -> new Threads<>(
                 threads,
                 tasks
             ).forEach(Boolean::valueOf)
@@ -140,7 +141,7 @@ public class EOmutexTest {
         final int threads = 100;
         final Phi acquire = new EOmutex$EOacquire(Phi.Φ);
         Acquisitions.INSTANCE.update(acquire, threads);
-        new org.cactoos.experimental.Threads<>(
+        new Threads<>(
             threads,
             Stream.generate(
                 () -> (Scalar<Boolean>) () -> {
