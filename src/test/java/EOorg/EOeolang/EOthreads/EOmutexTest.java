@@ -38,6 +38,9 @@ import java.util.concurrent.CountDownLatch;
 import java.util.concurrent.ExecutorService;
 import java.util.concurrent.Executors;
 import java.util.concurrent.TimeUnit;
+import java.util.stream.Collectors;
+import java.util.stream.Stream;
+import org.cactoos.Scalar;
 import org.eolang.Data;
 import org.eolang.ExFailure;
 import org.eolang.PhWith;
@@ -111,56 +114,45 @@ public class EOmutexTest {
     //  wait for the solving of hashcode problem
     @Test
     public void acquisitionUpdateDecrease() throws InterruptedException {
-        final int threads = 10;
-        final ExecutorService service = Executors.newFixedThreadPool(threads);
-        final Set<Phi> phis = new HashSet<>();
+        final int threads = 100;
+        final Set<Scalar<Boolean>> tasks = new HashSet<>(0);
         for (long counter = 0; counter < 1e2; ++counter) {
-            phis.add(
-                new EOmutex$EOacquire(Phi.Φ)
-            );
-        }
-        final CountDownLatch latch = new CountDownLatch(1);
-        for (final Phi item: phis) {
-            service.submit(
+            final Phi phi = new EOmutex$EOacquire(Phi.Φ);
+            tasks.add(
                 () -> {
-                    latch.await();
-                    Acquisitions.INSTANCE.update(item, 4);
-                    Acquisitions.INSTANCE.decrease(item, 2);
-                    Acquisitions.INSTANCE.decrease(item, 2);
+                    Acquisitions.INSTANCE.update(phi, 4);
+                    Acquisitions.INSTANCE.decrease(phi, 2);
+                    Acquisitions.INSTANCE.decrease(phi, 2);
                     return true;
                 }
             );
         }
-        latch.countDown();
-        service.shutdown();
-        MatcherAssert.assertThat(
-            service.awaitTermination(1, TimeUnit.SECONDS),
-            Matchers.equalTo(true)
+        Assertions.assertDoesNotThrow(
+            () -> new org.cactoos.experimental.Threads<>(
+                threads,
+                tasks
+            ).forEach(Boolean::valueOf)
         );
     }
 
     @Test
-    public void differentReleasesOfOneAcquire() throws InterruptedException {
+    public void differentReleasesOfOneAcquire() {
         final int threads = 100;
-        final ExecutorService service = Executors.newFixedThreadPool(threads);
         final Phi acquire = new EOmutex$EOacquire(Phi.Φ);
         Acquisitions.INSTANCE.update(acquire, threads);
-        final CountDownLatch latch = new CountDownLatch(1);
-        for (int counter = 0; counter < threads; ++counter) {
-            service.submit(
-                () -> {
-                    latch.await();
+        new org.cactoos.experimental.Threads<>(
+            threads,
+            Stream.generate(
+                () -> (Scalar<Boolean>) () -> {
                     Acquisitions.INSTANCE.decrease(acquire, 1);
                     return true;
                 }
-            );
-        }
-        latch.countDown();
-        service.shutdown();
-        service.awaitTermination(1, TimeUnit.SECONDS);
+            ).limit(threads).collect(Collectors.toList())
+        ).forEach(Boolean::valueOf);
         Assertions.assertThrows(
             ExFailure.class,
             () -> Acquisitions.INSTANCE.decrease(acquire, 1)
         );
     }
+
 }
