@@ -128,11 +128,11 @@
   thread > t7
     ar'
   thread > t8
-      ar'
+    ar'
   thread > t9
-      ar'
+    ar'
   thread > t10
-      ar'
+    ar'
   assert-that > @
     seq
       t0.start
