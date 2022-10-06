@@ -75,34 +75,16 @@ public class EOmutexTest {
         );
     }
 
-    // @todo #33:90min Uncomment this test when problem
-    //  of the of same hashcodes in parallel threads
-    //  will be solved. This test proves new Phi objects
-    //  created in parallel threads can have repeated
-    //  hashcodes
-    @Disabled
     @Test
-    public void phiUniqueHashesInDynamic() throws InterruptedException {
-        final int threads = 8;
+    public void phiUniqueHashesInDynamic() {
+        final int threads = 100;
         final Set<Integer> hashes = ConcurrentHashMap.newKeySet();
-        final ExecutorService service = Executors.newFixedThreadPool(threads);
-        final CountDownLatch latch = new CountDownLatch(1);
-        for (long counter = 0; counter < threads; ++counter) {
-            final long local = counter;
-            service.submit(
-                () -> {
-                    latch.await();
-                    final Phi number = new PhWith(
-                        new EOnumber(Phi.Φ),
-                        "n",
-                        new Data.ToPhi(local)
-                    );
-                    return hashes.add(number.hashCode());
-                }
-            );
-        }
-        latch.countDown();
-        service.awaitTermination(1, TimeUnit.SECONDS);
+        new Threads<>(
+            threads,
+            Stream.generate(
+                () -> (Scalar<Integer>) () -> (new EOmutex$EOacquire(Phi.Φ)).hashCode()
+            ).limit(threads).collect(Collectors.toList())
+        ).forEach(hashes::add);
         MatcherAssert.assertThat(
             hashes.size(),
             Matchers.equalTo(threads)
