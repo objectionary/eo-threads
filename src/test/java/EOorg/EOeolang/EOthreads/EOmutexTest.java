@@ -109,10 +109,6 @@ public class EOmutexTest {
         );
     }
 
-    // @todo #33:90min Implement test like the test
-    //  below where new Phi objects are created in
-    //  parallel instead of one thread. We need to
-    //  wait for the solving of hashcode problem
     @Test
     public void acquisitionUpdateDecrease() throws InterruptedException {
         final int threads = 100;
@@ -136,6 +132,28 @@ public class EOmutexTest {
         );
     }
 
+    @Test
+    public void updateDecreaseParallel() {
+        final int threads = 100;
+        final Set<Scalar<Boolean>> tasks = new HashSet<>(0);
+        for (long counter = 0; counter < threads; ++counter) {
+            tasks.add(
+                () -> {
+                    final Phi phi = new EOmutex$EOacquire(Phi.Φ);
+                    Acquisitions.INSTANCE.update(phi, 4);
+                    Acquisitions.INSTANCE.decrease(phi, 2);
+                    Acquisitions.INSTANCE.decrease(phi, 2);
+                    return true;
+                }
+            );
+        }
+        Assertions.assertDoesNotThrow(
+            () -> new Threads<>(
+                threads,
+                tasks
+            ).forEach(Boolean::valueOf)
+        );
+    }
     @Test
     public void differentReleasesOfOneAcquire() {
         final int threads = 100;
