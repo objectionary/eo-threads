@@ -90,7 +90,7 @@
 
 [] > overrelease
   mutex 1 > m
-  assert-that
+  assert-that > @
     try
       []
         seq > @
