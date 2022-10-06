@@ -154,6 +154,7 @@ public class EOmutexTest {
             ).forEach(Boolean::valueOf)
         );
     }
+
     @Test
     public void differentReleasesOfOneAcquire() {
         final int threads = 100;
