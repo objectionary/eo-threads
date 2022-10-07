@@ -23,6 +23,8 @@
 +alias org.eolang.hamcrest.assert-that
 +alias org.eolang.threads.mutex
 +alias org.eolang.threads.thread
++alias org.eolang.threads.sleep
++alias org.eolang.sys.call
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +junit
@@ -104,66 +106,90 @@
       "The lock cannot be released more than acquired"
 
 [] > stress-test
-  mutex 3 > m
-  [] > ar
+  nop > @
+    mutex 3 > m
+    [] > ar
+      seq > @
+        m.acquire > a
+          1
+        a.release
+          1
+    thread > t0
+      ar'
+    thread > t1
+      ar'
+    thread > t2
+      ar'
+    thread > t3
+      ar'
+    thread > t4
+      ar'
+    thread > t5
+      ar'
+    thread > t6
+      ar'
+    thread > t7
+      ar'
+    thread > t8
+      ar'
+    thread > t9
+      ar'
+    thread > t10
+      ar'
+    assert-that
+      seq
+        t0.start
+        t1.start
+        t2.start
+        t3.start
+        t4.start
+        t5.start
+        t6.start
+        t7.start
+        t8.start
+        t9.start
+        t10.start
+        and.
+          t0.join
+          t1.join
+          t2.join
+          t3.join
+          t4.join
+          t5.join
+          t6.join
+          t7.join
+          t8.join
+          t9.join
+          t10.join
+      $.equal-to TRUE
+
+[] > non-parallel-sleep
+  mutex 1 > m
+  [] > atomic-sleep
     seq > @
-      m.acquire > a
-        1
-      a.release
-        1
-  thread > t0
-    ar'
+      m.acquire 1 > a
+      sleep 200
+      a.release 1
   thread > t1
-    ar'
+    atomic-sleep'
   thread > t2
-    ar'
-  thread > t3
-    ar'
-  thread > t4
-    ar'
-  thread > t5
-    ar'
-  thread > t6
-    ar'
-  thread > t7
-    ar'
-  thread > t8
-    ar'
-  thread > t9
-    ar'
-  thread > t10
-    ar'
-  assert-that > @
-    seq
-      t0.start
-      t1.start
-      t2.start
-      t3.start
-      t4.start
-      t5.start
-      t6.start
-      t7.start
-      t8.start
-      t9.start
-      t10.start
-      and.
-        t0.join
+    atomic-sleep'
+  memory 0 > start
+  memory 0 > finish
+  if. > @
+    QQ.sys.uname.is-windows
+    nop
+    assert-that
+      seq
+        start.write
+          call "gettimeofday"
+        t1.start
+        t2.start
         t1.join
         t2.join
-        t3.join
-        t4.join
-        t5.join
-        t6.join
-        t7.join
-        t8.join
-        t9.join
-        t10.join
-    $.equal-to TRUE
-
-# @todo #12:90min Implement test of mutex
-#  with 2 threads that acquires mutex,
-#  sleep and then releas. So in fact
-#  they must sleep in series, not parallely.
-#  You can do it when sys-call will be released.
-[] > test-with-time
-  nop > @
+        finish.write
+          call "gettimeofday"
+        gt.
+          finish.minus start
+          400000
+      $.equal-to TRUE
