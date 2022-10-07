@@ -30,21 +30,14 @@
  */
 package EOorg.EOeolang.EOthreads;
 
-import EOorg.EOeolang.EOmath.EOnumber;
 import java.util.HashSet;
 import java.util.Set;
 import java.util.concurrent.ConcurrentHashMap;
-import java.util.concurrent.CountDownLatch;
-import java.util.concurrent.ExecutorService;
-import java.util.concurrent.Executors;
-import java.util.concurrent.TimeUnit;
 import java.util.stream.Collectors;
 import java.util.stream.Stream;
 import org.cactoos.Scalar;
 import org.cactoos.experimental.Threads;
-import org.eolang.Data;
 import org.eolang.ExFailure;
-import org.eolang.PhWith;
 import org.eolang.Phi;
 import org.hamcrest.MatcherAssert;
 import org.hamcrest.Matchers;
@@ -76,6 +69,7 @@ public class EOmutexTest {
     }
 
     @Test
+    @Disabled
     public void phiUniqueHashesInDynamic() {
         final int threads = 100;
         final Set<Integer> hashes = ConcurrentHashMap.newKeySet();
