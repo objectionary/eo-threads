@@ -85,7 +85,7 @@ public class EOmutexTest {
     }
 
     @Test
-    public void acquisitionUpdateDecrease() throws InterruptedException {
+    public void acquisitionUpdateDecrease() {
         final int threads = 100;
         final Set<Scalar<Boolean>> tasks = new HashSet<>(0);
         for (long counter = 0; counter < 1e2; ++counter) {
