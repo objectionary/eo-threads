@@ -69,9 +69,8 @@ public class EOmutexTest {
     }
 
     @Test
-    @Disabled
     public void phiUniqueHashesInDynamic() {
-        final int threads = 100;
+        final int threads = 1500;
         final Set<Integer> hashes = ConcurrentHashMap.newKeySet();
         new Threads<>(
             threads,
