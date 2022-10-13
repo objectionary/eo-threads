@@ -80,8 +80,8 @@
       b.release 1
   assert-that > @
     seq
-      t1.start
-      t2.start
+      t1.started
+      t2.started
       t1.join
       t2.join
       mem
@@ -183,8 +183,8 @@
       seq
         start.write
           call "gettimeofday"
-        t1.start
-        t2.start
+        t1.started
+        t2.started
         t1.join
         t2.join
         finish.write

@@ -33,7 +33,7 @@
 [] > thread-returns-string
   thread "hello" > t
   seq > @
-    t.start
+    t.started
     QQ.io.stdout
       QQ.txt.sprintf
         "t was started. You must wait after me\n"
@@ -45,7 +45,7 @@
 [] > thread-returns-number
   thread 7 > t
   seq > @
-    t.start
+    t.started
     QQ.io.stdout
       QQ.txt.sprintf
         "t was started. You must wait after me\n"
@@ -59,7 +59,7 @@
     5.plus
       5
   seq > @
-    t.start
+    t.started
     eq.
       10
       join.
@@ -71,8 +71,8 @@
   QQ.threads.thread > b
     1.plus 1
   seq > @
-    a.start
-    b.start
+    a.started
+    b.started
     eq.
       times.
         a.join
@@ -84,7 +84,7 @@
     1.div 0
   assert-that > @
     seq
-      t.start
+      t.started
       try
         []
           t.join > @
@@ -128,8 +128,8 @@
       seq
         start.write
           call "gettimeofday"
-        t1.start
-        t2.start
+        t1.started
+        t2.started
         t1.join
         t2.join
         finish.write
@@ -144,7 +144,7 @@
     sleep 1000
   assert-that > @
     seq
-      t.start
+      t.started
       t.stop
       try
         []
@@ -162,7 +162,7 @@
     sleep 10000
   assert-that > @
     seq
-      t.start
+      t.started
       t.stop
       sleep 200
       t.is-running
@@ -181,7 +181,7 @@
     sleep 300
   assert-that > @
     seq
-      t.start
+      t.started
       t.is-running
     $.equal-to TRUE
 
@@ -190,25 +190,25 @@
     sleep 50
   assert-that > @
     seq
-      t.start
+      t.started
       t.join
       t.is-running
     $.equal-to FALSE
 
-[] > is-running-after-start
+[] > is-running-after-started
   thread > t
     sleep 1000
   assert-that > @
     is-running.
       seq
-        t.start
+        t.started
         t
     $.equal-to TRUE
 
 [] > is-running-readme-example
   while. > @
     is-running.
-      start.
+      started.
         thread > t
           sleep 50000
     [i]
@@ -223,13 +223,13 @@
           t.stop
           TRUE
 
-[] > twice-start
+[] > twice-started
   thread > t
     sleep 300
   assert-that > @
     seq
-      t.start
-      t.start
+      t.started
+      t.started
       t.stop
     $.equal-to
       TRUE

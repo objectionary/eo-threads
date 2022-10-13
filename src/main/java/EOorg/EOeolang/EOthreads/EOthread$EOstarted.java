@@ -36,19 +36,19 @@ import org.eolang.Phi;
 import org.eolang.XmirObject;
 
 /**
- * START.
+ * STARTED.
  *
  * @checkstyle TypeNameCheck (5 lines)
  * @since 0.0
  */
-@XmirObject(oname = "thread.start")
-public class EOthread$EOstart extends PhDefault {
+@XmirObject(oname = "thread.started")
+public class EOthread$EOstarted extends PhDefault {
     /**
      * Ctor.
      *
      * @param sigma Sigma
      */
-    public EOthread$EOstart(final Phi sigma) {
+    public EOthread$EOstarted(final Phi sigma) {
         super(sigma);
         this.add(
             "φ",
