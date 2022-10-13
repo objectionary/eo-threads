@@ -29,9 +29,6 @@
 [slow] > thread
   TRUE > @
   [] > join /slow
-  [] > start /bool
-  seq > start2
-    start
-    ^
+  [] > start /thread
   [] > stop /bool
   [] > is-running /bool
