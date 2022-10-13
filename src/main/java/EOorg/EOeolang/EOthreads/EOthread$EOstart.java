@@ -56,13 +56,12 @@ public class EOthread$EOstart extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi parent = rho.attr("ρ").get();
-                    final DataizingThread thr = Threads.INSTANCE.get(parent);
+                    final Phi home = rho.attr("σ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(home);
                     if (thr.getState() == Thread.State.NEW) {
                         thr.start();
                     }
-                    System.out.println("In start Hashcode = " + parent.hashCode());
-                    return new Data.ToPhi(true);
+                    return home;
                 }
             )
         );
