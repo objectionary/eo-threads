@@ -222,3 +222,14 @@
           i.gt 2
           t.stop
           TRUE
+
+[] > twice-start
+  thread > t
+    sleep 300
+  assert-that > @
+    seq
+      t.start
+      t.start
+      t.stop
+    $.equal-to
+      TRUE
