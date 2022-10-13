@@ -205,7 +205,7 @@
         t
     $.equal-to TRUE
 
-[] > returns-thread
+[] > is-running-readme-example
   while. > @
     is-running.
       start.
@@ -214,9 +214,11 @@
     [i]
       seq > @
         QQ.io.stdout
-          "still waiting..."
+          QQ.txt.sprintf
+            "i = %d, still waiting...\n"
+            i
         sleep 50
         if.
-          i.gt 10
+          i.gt 2
           t.stop
           TRUE
