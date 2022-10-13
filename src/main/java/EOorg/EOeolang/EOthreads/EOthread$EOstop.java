@@ -56,8 +56,8 @@ public class EOthread$EOstop extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi parent = rho.attr("ρ").get();
-                    final DataizingThread thr = Threads.INSTANCE.get(parent);
+                    final Phi home = rho.attr("σ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(home);
                     thr.interrupt();
                     return new Data.ToPhi(true);
                 }

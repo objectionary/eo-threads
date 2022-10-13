@@ -56,9 +56,8 @@ public class EOthread$EOis_running extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi parent = rho.attr("ρ").get();
-                    System.out.println("In is-running parent hashcode = " + parent.hashCode());
-                    final DataizingThread thr = Threads.INSTANCE.get(parent);
+                    final Phi home = rho.attr("σ").get();
+                    final DataizingThread thr = Threads.INSTANCE.get(home);
                     return new Data.ToPhi(thr.isAlive());
                 }
             )
