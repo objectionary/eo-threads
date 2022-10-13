@@ -27,7 +27,7 @@ SOFTWARE.
   <parent>
     <groupId>com.jcabi</groupId>
     <artifactId>parent</artifactId>
-    <version>0.62.0</version>
+    <version>0.63.2</version>
   </parent>
   <groupId>org.eolang</groupId>
   <artifactId>eo-threads</artifactId>
@@ -35,7 +35,7 @@ SOFTWARE.
   <packaging>jar</packaging>
   <name>eo-threads</name>
   <properties>
-    <eolang.version>0.28.6</eolang.version>
+    <eolang.version>0.28.10</eolang.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
   </properties>
@@ -100,6 +100,11 @@ SOFTWARE.
       <artifactId>junit-jupiter-params</artifactId>
       <version>5.9.1</version>
       <scope>test</scope>
+    </dependency>
+    <dependency>
+      <groupId>org.cactoos</groupId>
+      <artifactId>cactoos</artifactId>
+      <version>0.54.0</version>
     </dependency>
   </dependencies>
   <build>

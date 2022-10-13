@@ -59,10 +59,15 @@ public class EOmutex$EOacquire$EOφ extends PhDefault {
             new AtComposite(
                 this,
                 rho -> {
-                    final Phi mutex = rho.attr("ρ").get().attr("ρ").get();
+                    final Phi acquire = rho.attr("ρ").get();
+                    final Phi mutex = acquire.attr("ρ").get();
                     final long locks = new Dataized(
-                        rho.attr("ρ").get().attr("locks").get()
+                        acquire.attr("locks").get()
                     ).take(Long.class);
+                    Acquisitions.INSTANCE.update(
+                        acquire,
+                        (int) locks
+                    );
                     final Semaphore semaphore = Semaphores.INSTANCE.get(mutex);
                     semaphore.acquire((int) locks);
                     return new Data.ToPhi(true);
