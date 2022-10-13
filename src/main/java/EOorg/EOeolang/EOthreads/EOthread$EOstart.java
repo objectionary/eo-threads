@@ -31,7 +31,6 @@
 package EOorg.EOeolang.EOthreads;
 
 import org.eolang.AtComposite;
-import org.eolang.Data;
 import org.eolang.PhDefault;
 import org.eolang.Phi;
 import org.eolang.XmirObject;
@@ -58,8 +57,10 @@ public class EOthread$EOstart extends PhDefault {
                 rho -> {
                     final Phi home = rho.attr("σ").get();
                     final DataizingThread thr = Threads.INSTANCE.get(home);
-                    if (thr.getState() == Thread.State.NEW) {
-                        thr.start();
+                    synchronized (thr) {
+                        if (thr.getState() == Thread.State.NEW) {
+                            thr.start();
+                        }
                     }
                     return home;
                 }
