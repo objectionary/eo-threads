@@ -105,63 +105,64 @@
     $.equal-to
       "The lock cannot be released more than acquired"
 
+# @todo #61:90min Implement this test with
+#  using list and reduced of the list. So we
+#  need to create the list of threads and
+#  start them in list.reduced
 [] > stress-test
-  nop > @
-    mutex 3 > m
-    [] > ar
-      seq > @
-        m.acquire > a
-          1
-        a.release
-          1
-    thread > t0
-      ar'
-    thread > t1
-      ar'
-    thread > t2
-      ar'
-    thread > t3
-      ar'
-    thread > t4
-      ar'
-    thread > t5
-      ar'
-    thread > t6
-      ar'
-    thread > t7
-      ar'
-    thread > t8
-      ar'
-    thread > t9
-      ar'
-    thread > t10
-      ar'
-    assert-that
-      seq
-        t0.start
-        t1.start
-        t2.start
-        t3.start
-        t4.start
-        t5.start
-        t6.start
-        t7.start
-        t8.start
-        t9.start
-        t10.start
-        and.
-          t0.join
-          t1.join
-          t2.join
-          t3.join
-          t4.join
-          t5.join
-          t6.join
-          t7.join
-          t8.join
-          t9.join
-          t10.join
-      $.equal-to TRUE
+  mutex 3 > m
+  [] > ar
+    seq > @
+      m.acquire 1 > a
+      a.release 1
+  thread > t0
+    ar'
+  thread > t1
+    ar'
+  thread > t2
+    ar'
+  thread > t3
+    ar'
+  thread > t4
+    ar'
+  thread > t5
+    ar'
+  thread > t6
+    ar'
+  thread > t7
+    ar'
+  thread > t8
+    ar'
+  thread > t9
+    ar'
+  thread > t10
+    ar'
+  assert-that > @
+    seq
+      t0.started
+      t1.started
+      t2.started
+      t3.started
+      t4.started
+      t5.started
+      t6.started
+      t7.started
+      t8.started
+      t9.started
+      t10.started
+      and.
+        t0.join
+        t1.join
+        t2.join
+        t3.join
+        t4.join
+        t5.join
+        t6.join
+        t7.join
+        t8.join
+        t9.join
+        t10.join
+    $.equal-to TRUE
 
 [] > non-parallel-sleep
   mutex 1 > m
