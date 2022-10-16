@@ -30,8 +30,5 @@
   [locks] > acquire
     [] > @ /bool
 
-    # @todo #12:90min We need to count numbers of locks
-    #  and releases in order to throw exceptions
-    #  if there were more releases then locks
     [releases] > release
       [] > @ /bool
