@@ -23,14 +23,11 @@
 +alias org.eolang.hamcrest.assert-that
 +alias org.eolang.threads.thread
 +alias org.eolang.threads.sleep
-+alias org.eolang.collections.list
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +junit
 +package org.eolang.threads
 +version 0.0.0
-
-TRUE > call
 
 [] > thread-returns-string
   thread "hello" > t
@@ -235,34 +232,3 @@ TRUE > call
       t.stop
     $.equal-to
       TRUE
-
-[] > list-tests-1
-  memory 0 > m
-  [size mem] > my-list
-    if. > @
-      size.lte 0
-      list *
-      with.
-        my-list
-          size.minus 1
-          mem
-        thread
-          mem.write
-            mem.plus 1
-  my-list 3 m > l
-  seq > @
-    reduced.
-      l
-      TRUE
-      [a x]
-        and. > @
-          a
-          x.started
-    reduced.
-      l
-      0
-      [a x]
-        plus. > @
-          a
-          x.join
-    TRUE

@@ -31,8 +31,6 @@
 +package org.eolang.threads
 +version 0.0.0
 
-TRUE > call
-
 [] > acquire-release
   mutex 100 > m
   seq > @
@@ -107,11 +105,7 @@ TRUE > call
     $.equal-to
       "The lock cannot be released more than acquired"
 
-# @todo #61:90min Implement this test with
-#  using list and reduced of the list. So we
-#  need to create the list of threads and
-#  start them in list.reduced
-[] > stress-test
+[] > stress-test-1
   mutex 3 > m
   [] > ar
     seq > @
@@ -166,6 +160,37 @@ TRUE > call
         t10.join
     $.equal-to TRUE
 
+[] > stress-test-2
+  mutex 2 > m
+  [size mut] > list-by-size
+    if. > @
+      size.lte 0
+      list *
+      with.
+        list-by-size
+          size.minus 1
+          mut
+        thread
+          seq
+            mut.acquire 1 > a
+            a.release 1
+  list-by-size 6 m > l
+  assert-that > @
+    seq
+      l.reduced
+        TRUE
+        [a x]
+          and. > @
+            a
+            x.started
+      l.reduced
+        TRUE
+        [a x]
+          and. > @
+            a
+            x.join
+    $.equal-to TRUE
+
 [] > non-parallel-sleep
   mutex 1 > m
   [] > atomic-sleep
@@ -196,35 +221,3 @@ TRUE > call
           finish.minus start
           400000
       $.equal-to TRUE
-
-[] > list-tests-2
-  mutex 2 > m
-  [size mut] > my-list
-    if. > @
-      size.lte 0
-      list *
-      with.
-        my-list
-          size.minus 1
-          mut
-        thread
-          seq
-            mut.acquire 1 > a
-            a.release 1
-  my-list 10 m > l
-  seq > @
-    reduced.
-      l
-      TRUE
-      [a x]
-        and. > @
-          a
-          x.started
-    reduced.
-      l
-      TRUE
-      [a x]
-        and. > @
-          a
-          x.join
-    TRUE
