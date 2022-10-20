@@ -175,7 +175,7 @@
           seq
             mut.acquire 1 > a
             a.release 1
-  list-by-size 6 m > l
+  list-by-size 3 m > l
   assert-that > @
     seq
       l.reduced
