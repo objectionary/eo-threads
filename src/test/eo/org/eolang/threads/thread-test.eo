@@ -236,7 +236,7 @@ TRUE > call
     $.equal-to
       TRUE
 
-[] > list-tests
+[] > list-tests-1
   memory 0 > m
   [size mem] > my-list
     if. > @
