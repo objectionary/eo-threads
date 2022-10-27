@@ -26,6 +26,10 @@
 +rt jvm org.eolang:eo-threads:0.0.0
 +version 0.0.0
 
+# Helps threads to synchronize their actions.
+# mutex.acquire blocks the thread until there
+# is no specified number of free locks and then
+# gives ability to release the locks for other threads.
 [permits] > mutex
   [locks] > acquire
     [] > @ /bool

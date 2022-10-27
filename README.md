@@ -20,14 +20,13 @@ while.
   is-running.
     start.
       QQ.threads.thread > t
-        [x]
-          very-slow-object > @
+        very-slow-object
   [i]
     seq > @
       QQ.io.stdout
         "still waiting..."
       QQ.threads.sleep
-        QQ.dt.millisecond.mul 100
+        100
       if.
         i.gt 10
         t.stop
@@ -35,12 +34,13 @@ while.
 ```
 
 The object `thread` has attributes:
-
-  * `start` starts the thread or does nothing if it's already running
+  * free attribute `slow` to set a task to the thread.
+  * `started` starts the thread or does nothing if it's already running, returns the `thread`
   * `is-running` is TRUE if it is still working
-  * `stop` immediately terminates it
+  * `stop` informs the `thread` it must be terminated.
+  * `join` returns the result of dataization `slow`.
 
-Dataization of the `thread` object means waiting for its finish.
+Dataization of the `thread.join` object means dataized `slow`.
 If the thread is terminated, dataization returns `error`.
 
 ## How to Contribute
