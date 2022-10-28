@@ -1,0 +1,6 @@
+objectionary/objects/org/eolang/threads/thread.eo
+objectionary/objects/org/eolang/threads/mutex.eo
+objectionary/objects/org/eolang/threads/sleep.eo
+objectionary/tests/org/eolang/threads/mutex-test.eo
+objectionary/tests/org/eolang/threads/sleep-test.eo
+objectionary/tests/org/eolang/threads/thread-test.eo

@@ -1,0 +1,224 @@
+# The MIT License (MIT)
+#
+# Copyright (c) 2016-2022 Objectionary.com
+#
+# Permission is hereby granted, free of charge, to any person obtaining a copy
+# of this software and associated documentation files (the "Software"), to deal
+# in the Software without restriction, including without limitation the rights
+# to use, copy, modify, merge, publish, distribute, sublicense, and/or sell
+# copies of the Software, and to permit persons to whom the Software is
+# furnished to do so, subject to the following conditions:
+#
+# The above copyright notice and this permission notice shall be included
+# in all copies or substantial portions of the Software.
+#
+# THE SOFTWARE IS PROVIDED "AS IS", WITHOUT WARRANTY OF ANY KIND, EXPRESS OR
+# IMPLIED, INCLUDING BUT NOT LIMITED TO THE WARRANTIES OF MERCHANTABILITY,
+# FITNESS FOR A PARTICULAR PURPOSE AND NON-INFRINGEMENT. IN NO EVENT SHALL THE
+# AUTHORS OR COPYRIGHT HOLDERS BE LIABLE FOR ANY CLAIM, DAMAGES OR OTHER
+# LIABILITY, WHETHER IN AN ACTION OF CONTRACT, TORT OR OTHERWISE, ARISING FROM,
+# OUT OF OR IN CONNECTION WITH THE SOFTWARE OR THE USE OR OTHER DEALINGS IN THE
+# SOFTWARE.
+
++alias org.eolang.hamcrest.assert-that
++alias org.eolang.threads.mutex
++alias org.eolang.threads.thread
++alias org.eolang.threads.sleep
++alias org.eolang.sys.call
++alias org.eolang.collections.list
++architect 28lev11@gmail.com
++home https://github.com/objectionary/eo-threads
++junit
++package org.eolang.threads
++version 0.0.2
+
+[] > acquire-release
+  mutex 100 > m
+  seq > @
+    m.acquire 1 > a
+    a.release
+      1
+    m.acquire 1 > b
+    b.release
+      1
+
+[] > double-acquire
+  mutex 2 > m
+  assert-that > @
+    seq
+      m.acquire 1 > a
+      m.acquire 1 > b
+      a.release 1
+      b.release 1
+    $.equal-to TRUE
+
+[] > acquire-with-locks
+  mutex 100 > m
+  assert-that > @
+    seq
+      m.acquire > a
+        100
+      a.release
+        50
+      a.release
+        50
+    $.equal-to TRUE
+
+[] > lock-with-threads
+  memory 1 > mem
+  mutex 1 > mut
+  thread > t1
+    seq
+      mut.acquire 1 > a
+      mem.write
+        mem.times 2
+      a.release 1
+  thread > t2
+    seq
+      mut.acquire 1 > b
+      mem.write
+        mem.times 3
+      b.release 1
+  assert-that > @
+    seq
+      t1.started
+      t2.started
+      t1.join
+      t2.join
+      mem
+    $.equal-to
+      6
+
+[] > overrelease
+  mutex 1 > m
+  assert-that > @
+    try
+      []
+        seq > @
+          m.acquire > a
+            1
+          a.release 2
+      [e]
+        e.slice > @
+          0
+          46
+      nop
+    $.equal-to
+      "The lock cannot be released more than acquired"
+
+[] > stress-test-1
+  mutex 3 > m
+  [] > ar
+    seq > @
+      m.acquire 1 > a
+      a.release 1
+  thread > t0
+    ar'
+  thread > t1
+    ar'
+  thread > t2
+    ar'
+  thread > t3
+    ar'
+  thread > t4
+    ar'
+  thread > t5
+    ar'
+  thread > t6
+    ar'
+  thread > t7
+    ar'
+  thread > t8
+    ar'
+  thread > t9
+    ar'
+  thread > t10
+    ar'
+  assert-that > @
+    seq
+      t0.started
+      t1.started
+      t2.started
+      t3.started
+      t4.started
+      t5.started
+      t6.started
+      t7.started
+      t8.started
+      t9.started
+      t10.started
+      and.
+        t0.join
+        t1.join
+        t2.join
+        t3.join
+        t4.join
+        t5.join
+        t6.join
+        t7.join
+        t8.join
+        t9.join
+        t10.join
+    $.equal-to TRUE
+
+[] > stress-test-2
+  mutex 2 > m
+  [size mut] > list-by-size
+    if. > @
+      size.lte 0
+      list *
+      with.
+        list-by-size
+          size.minus 1
+          mut
+        thread
+          seq
+            mut.acquire 1 > a
+            a.release 1
+  list-by-size 3 m > l
+  assert-that > @
+    seq
+      l.reduced
+        TRUE
+        [a x]
+          and. > @
+            a
+            x.started
+      l.reduced
+        TRUE
+        [a x]
+          and. > @
+            a
+            x.join
+    $.equal-to TRUE
+
+[] > non-parallel-sleep
+  mutex 1 > m
+  [] > atomic-sleep
+    seq > @
+      m.acquire 1 > a
+      sleep 200
+      a.release 1
+  thread > t1
+    atomic-sleep'
+  thread > t2
+    atomic-sleep'
+  memory 0 > start
+  memory 0 > finish
+  if. > @
+    QQ.sys.uname.is-windows
+    nop
+    assert-that
+      seq
+        start.write
+          call "gettimeofday"
+        t1.started
+        t2.started
+        t1.join
+        t2.join
+        finish.write
+          call "gettimeofday"
+        gt.
+          finish.minus start
+          400000
+      $.equal-to TRUE
