@@ -31,7 +31,7 @@ SOFTWARE.
   </parent>
   <groupId>org.eolang</groupId>
   <artifactId>eo-threads</artifactId>
-  <version>1.0-SNAPSHOT</version>
+  <version>0.0.2</version>
   <packaging>jar</packaging>
   <name>eo-threads</name>
   <properties>
