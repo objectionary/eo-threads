@@ -7,6 +7,7 @@
 [![mvn](https://github.com/objectionary/eo-threads/actions/workflows/mvn.yml/badge.svg?branch=master)](https://github.com/objectionary/eo-threads/actions/workflows/mvn.yml)
 [![PDD status](http://www.0pdd.com/svg?name=objectionary/eo-threads)](http://www.0pdd.com/p?name=objectionary/eo-threads)
 [![codecov](https://codecov.io/gh/objectionary/eo-threads/branch/master/graph/badge.svg)](https://codecov.io/gh/objectionary/eo-threads)
+[![Maven Central](https://img.shields.io/maven-central/v/org.eolang/eo-threads.svg)](https://maven-badges.herokuapp.com/maven-central/org.eolang/eo-threads)
 [![Hits-of-Code](https://hitsofcode.com/github/objectionary/eo-threads)](https://hitsofcode.com/view/github/objectionary/eo-threads)
 ![Lines of code](https://img.shields.io/tokei/lines/github/objectionary/eo-threads)
 [![License](https://img.shields.io/badge/license-MIT-green.svg)](https://github.com/objectionary/eo-threads/blob/master/LICENSE.txt)
