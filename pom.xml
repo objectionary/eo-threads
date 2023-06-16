@@ -38,6 +38,7 @@ SOFTWARE.
     <eolang.version>0.29.4</eolang.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
+    <stack-size>256M</stack-size>
   </properties>
   <description>EO objects for manipulations with threads.</description>
   <url>https://github.com/objectionary/eo-threads</url>
@@ -113,6 +114,13 @@ SOFTWARE.
         <artifactId>maven-compiler-plugin</artifactId>
         <version>3.8.1</version>
         <configuration combine.self="override"/>
+      </plugin>
+      <plugin>
+        <groupId>org.apache.maven.plugins</groupId>
+        <artifactId>maven-surefire-plugin</artifactId>
+        <configuration>
+          <argLine>-Xss${stack-size}</argLine>
+        </configuration>
       </plugin>
       <plugin>
         <groupId>org.eolang</groupId>
