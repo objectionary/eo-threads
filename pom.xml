@@ -35,7 +35,7 @@ SOFTWARE.
   <packaging>jar</packaging>
   <name>eo-threads</name>
   <properties>
-    <eolang.version>0.30.0</eolang.version>
+    <eolang.version>0.32.0</eolang.version>
     <project.build.sourceEncoding>UTF-8</project.build.sourceEncoding>
     <project.reporting.outputEncoding>UTF-8</project.reporting.outputEncoding>
     <stack-size>256M</stack-size>
