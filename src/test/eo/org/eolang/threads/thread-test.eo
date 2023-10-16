@@ -107,7 +107,8 @@
         sleep 200
         finish.write
           call "gettimeofday"
-        finish.minus start
+        finish.as-int.minus
+          start.as-int
       $.all-of
         $.less-than
           1000000
@@ -135,7 +136,8 @@
         finish.write
           call "gettimeofday"
         lt.
-          finish.minus start
+          finish.as-int.minus
+            start.as-int
           600000
       $.equal-to TRUE
 
