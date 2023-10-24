@@ -23,7 +23,7 @@
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
 +package org.eolang.threads
-+rt jvm org.eolang:eo-threads:0.0.2
-+version 0.0.2
++rt jvm org.eolang:eo-threads:0.0.3
++version 0.0.3
 
 [millis] > sleep /bool

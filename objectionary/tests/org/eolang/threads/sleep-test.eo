@@ -24,9 +24,9 @@
 +alias org.eolang.threads.sleep
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
-+junit
 +package org.eolang.threads
-+version 0.0.2
++tests
++version 0.0.3
 
 [] > sleep-returns-true
   sleep > @

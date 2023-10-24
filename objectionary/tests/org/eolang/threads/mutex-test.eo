@@ -28,9 +28,9 @@
 +alias org.eolang.collections.list
 +architect 28lev11@gmail.com
 +home https://github.com/objectionary/eo-threads
-+junit
 +package org.eolang.threads
-+version 0.0.2
++tests
++version 0.0.3
 
 [] > acquire-release
   mutex 100 > m
@@ -71,13 +71,13 @@
     seq
       mut.acquire 1 > a
       mem.write
-        mem.times 2
+        mem.as-int.times 2
       a.release 1
   thread > t2
     seq
       mut.acquire 1 > b
       mem.write
-        mem.times 3
+        mem.as-int.times 3
       b.release 1
   assert-that > @
     seq
@@ -219,6 +219,7 @@
         finish.write
           call "gettimeofday"
         gt.
-          finish.minus start
+          finish.as-int.minus
+            start.as-int
           400000
       $.equal-to TRUE
